@@ -15,10 +15,10 @@
         }
     ],
     "require": {
-        "oro/platform": "1.9"
+        "oro/platform": "1.9",
+        "sensio/generator-bundle": "^3.0"
     },
     "require-dev": {
-        "sensio/generator-bundle": "2.5.3"
     },
     "config": {
         "component-dir": "web/bundles/components"
