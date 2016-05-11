@@ -17,14 +17,14 @@ class Resolution
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    private $id;
 
     /**
      * @var string
      *
      * @ORM\Column(type="string")
      */
-    protected $name;
+    private $name;
 
     /**
      * @return int

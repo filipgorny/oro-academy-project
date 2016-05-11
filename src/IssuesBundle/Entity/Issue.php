@@ -138,7 +138,7 @@ class Issue extends ExtendIssue
 
     /**
      * @ORM\ManyToOne(targetEntity="Resolution")
-     * @ORM\JoinColumn(name="resolution_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="resolution_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $resolution;
 
