@@ -1,3 +1,27 @@
 issues:
     issue:
         entity_label: Issue
+        id:
+            label: Id
+        assignee:
+            label: Assignee
+        code:
+            label: Code
+        description:
+            label: Description
+        organization:
+            label: Organization
+        priority:
+            label: Priority
+        reporter:
+            label: Reporter
+        resolution:
+             label: Resolution
+        summary:
+            label: Summary
+        type:
+            label: Type
+        updated_by:
+            label: Updated by
+        owner:
+            label: Owner
