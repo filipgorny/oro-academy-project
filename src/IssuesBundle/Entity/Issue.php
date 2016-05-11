@@ -159,6 +159,39 @@ class Issue extends ExtendIssue
     protected $assignee;
 
     /**
+     * @var Issue[]
+     *
+     * @ORM\ManyToMany(targetEntity="Issue")
+     * @ORM\JoinTable(name="oro_issues_related",
+     *      joinColumns={@JoinColumn(name="parent_issue_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@JoinColumn(name="related_issue_id", referencedColumnName="id")}
+     *      )
+     */
+    private $relatedIssues;
+
+    /**
+     * @var Issue[]
+     *
+     * @ORM\ManyToMany(targetEntity="Issue")
+     * @ORM\JoinTable(name="oro_issues_children",
+     *      joinColumns={@JoinColumn(name="parent_issue_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@JoinColumn(name="child_issue_id", referencedColumnName="id")}
+     *      )
+     */
+    private $children;
+
+    /**
+     * @var User[]
+     *
+     * @ORM\ManyToMany(targetEntity="Oro\Bundle\UserBundle\Entity\User")
+     * @ORM\JoinTable(name="oro_issues_collaborators",
+     *      joinColumns={@JoinColumn(name="issue_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@JoinColumn(name="user_id", referencedColumnName="id")}
+     *      )
+     */
+    private $collaborators;
+
+    /**
      * @return int
      */
     public function getId()
@@ -374,15 +407,51 @@ class Issue extends ExtendIssue
         $this->assignee = $assignee;
     }
 
+    /**
+     * @return Issue[]
+     */
+    public function getRelatedIssues()
+    {
+        return $this->relatedIssues;
+    }
 
+    /**
+     * @param Issue[] $relatedIssues
+     */
+    public function setRelatedIssues($relatedIssues)
+    {
+        $this->relatedIssues = $relatedIssues;
+    }
 
-//status (workflow step, OroWorkflowBundle: Open, In progress, Closed, Resolved, Reopened)
-//tags (dictionary entity from OroTagBundle)
-//related issues
-//collaborators (users)
-//parent (applicable for Subtask)
-//children (applicable for Story)
-//notes
-//created
-//updated
+    /**
+     * @return Issue[]
+     */
+    public function getChildren()
+    {
+        return $this->children;
+    }
+
+    /**
+     * @param Issue[] $children
+     */
+    public function setChildren($children)
+    {
+        $this->children = $children;
+    }
+
+    /**
+     * @return \Oro\Bundle\UserBundle\Entity\User[]
+     */
+    public function getCollaborators()
+    {
+        return $this->collaborators;
+    }
+
+    /**
+     * @param \Oro\Bundle\UserBundle\Entity\User[] $collaborators
+     */
+    public function setCollaborators($collaborators)
+    {
+        $this->collaborators = $collaborators;
+    }
 }
