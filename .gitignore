@@ -19,3 +19,5 @@ composer.lock
 *~
 
 /app/SymfonyRequirements.php
+/tmp
+

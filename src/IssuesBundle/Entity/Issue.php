@@ -163,8 +163,8 @@ class Issue extends ExtendIssue
      *
      * @ORM\ManyToMany(targetEntity="Issue")
      * @ORM\JoinTable(name="oro_issues_related",
-     *      joinColumns={@JoinColumn(name="parent_issue_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@JoinColumn(name="related_issue_id", referencedColumnName="id")}
+     *      joinColumns={@ORM\JoinColumn(name="parent_issue_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="related_issue_id", referencedColumnName="id")}
      *      )
      */
     private $relatedIssues;
@@ -174,8 +174,8 @@ class Issue extends ExtendIssue
      *
      * @ORM\ManyToMany(targetEntity="Issue")
      * @ORM\JoinTable(name="oro_issues_children",
-     *      joinColumns={@JoinColumn(name="parent_issue_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@JoinColumn(name="child_issue_id", referencedColumnName="id")}
+     *      joinColumns={@ORM\JoinColumn(name="parent_issue_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="child_issue_id", referencedColumnName="id")}
      *      )
      */
     private $children;
@@ -185,8 +185,8 @@ class Issue extends ExtendIssue
      *
      * @ORM\ManyToMany(targetEntity="Oro\Bundle\UserBundle\Entity\User")
      * @ORM\JoinTable(name="oro_issues_collaborators",
-     *      joinColumns={@JoinColumn(name="issue_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@JoinColumn(name="user_id", referencedColumnName="id")}
+     *      joinColumns={@ORM\JoinColumn(name="issue_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")}
      *      )
      */
     private $collaborators;
