@@ -26,3 +26,15 @@ issues:
             label: Updated by
         owner:
             label: Owner
+        children:
+            label: Subtasks
+        relatedIssues:
+            label: Related Issues
+        collaborators:
+            label: Collaborators
+        createdAt:
+            label: Created at
+        updatedAt:
+            label: Updated at
+        parent:
+            label: Parent issue

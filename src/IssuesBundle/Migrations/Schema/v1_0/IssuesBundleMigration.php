@@ -8,7 +8,7 @@ use Oro\Bundle\MigrationBundle\Migration\QueryBag;
 use Oro\Bundle\NoteBundle\Migration\Extension\NoteExtension;
 use Oro\Bundle\NoteBundle\Migration\Extension\NoteExtensionAwareInterface;
 
-class IssuesBundle implements Migration, NoteExtensionAwareInterface
+class IssuesBundleMigration implements Migration, NoteExtensionAwareInterface
 {
     /**
      * @var NoteExtension
@@ -48,6 +48,7 @@ class IssuesBundle implements Migration, NoteExtensionAwareInterface
         $table->addColumn('code', 'string', ['length' => 255]);
         $table->addColumn('description', 'string', ['length' => 255]);
         $table->addColumn('type', 'smallint', []);
+        $table->addColumn('parent_id', 'integer', ['notnull' => false]);
         $table->setPrimaryKey(['id']);
         $table->addIndex(['updated_by_id'], 'IDX_AADA29B1896DBBDE', []);
         $table->addIndex(['owner_id'], 'IDX_AADA29B17E3C61F9', []);
@@ -56,6 +57,7 @@ class IssuesBundle implements Migration, NoteExtensionAwareInterface
         $table->addIndex(['resolution_id'], 'IDX_AADA29B112A1C43A', []);
         $table->addIndex(['reporter_id'], 'IDX_AADA29B1E1CFE6F5', []);
         $table->addIndex(['assignee_id'], 'IDX_AADA29B159EC7D60', []);
+        $table->addIndex(['parent_id'], 'IDX_2DDC40DD727ACA70', []);
     }
 
     /**
@@ -67,6 +69,7 @@ class IssuesBundle implements Migration, NoteExtensionAwareInterface
     {
         $table = $schema->createTable('oro_issues_priorities');
         $table->addColumn('id', 'integer', ['autoincrement' => true]);
+        $table->addColumn('level', 'integer', []);
         $table->addColumn('name', 'string', ['length' => 255]);
         $table->setPrimaryKey(['id']);
     }
@@ -99,10 +102,6 @@ class IssuesBundle implements Migration, NoteExtensionAwareInterface
         $table = $schema->createTable('oro_issues_related');
         $table->addColumn('parent_issue_id', 'integer', []);
         $table->addColumn('related_issue_id', 'integer', []);
-
-        $table = $schema->createTable('oro_issues_children');
-        $table->addColumn('parent_issue_id', 'integer', []);
-        $table->addColumn('child_issue_id', 'integer', []);
 
         $table = $schema->createTable('oro_issues_collaborators');
         $table->addColumn('issue_id', 'integer', []);

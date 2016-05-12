@@ -2,6 +2,7 @@
 
 namespace IssuesBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\Config;
@@ -170,18 +171,22 @@ class Issue extends ExtendIssue
     private $relatedIssues;
 
     /**
-     * @var Issue[]
+     * @var Issue[]|ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="Issue")
-     * @ORM\JoinTable(name="oro_issues_children",
-     *      joinColumns={@ORM\JoinColumn(name="parent_issue_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="child_issue_id", referencedColumnName="id")}
-     *      )
+     * @ORM\OneToMany(targetEntity="Issue", mappedBy="parent")
      */
     private $children;
 
     /**
-     * @var User[]
+     * @var Issue
+     *
+     * @ORM\ManyToOne(targetEntity="Issue")
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="SET NULL", nullable=true)
+     */
+    private $parent;
+
+    /**
+     * @var User[]|ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="Oro\Bundle\UserBundle\Entity\User")
      * @ORM\JoinTable(name="oro_issues_collaborators",
@@ -190,6 +195,13 @@ class Issue extends ExtendIssue
      *      )
      */
     private $collaborators;
+
+    public function __construct()
+    {
+        $this->children = new ArrayCollection();
+        $this->relatedIssues = new ArrayCollection();
+        $this->collaborators = new ArrayCollection();
+    }
 
     /**
      * @return int
@@ -344,7 +356,7 @@ class Issue extends ExtendIssue
     }
 
     /**
-     * @return mixed
+     * @return Priority
      */
     public function getPriority()
     {
@@ -360,7 +372,7 @@ class Issue extends ExtendIssue
     }
 
     /**
-     * @return mixed
+     * @return Resolution
      */
     public function getResolution()
     {
@@ -432,10 +444,16 @@ class Issue extends ExtendIssue
     }
 
     /**
-     * @param Issue[] $children
+     * @param Issue[]|ArrayCollection $children
      */
     public function setChildren($children)
     {
+        if (is_array($children) || $children instanceof ArrayCollection) {
+            foreach ($children as $child) {
+                $child->setParent($this);
+            }
+        }
+
         $this->children = $children;
     }
 
@@ -448,10 +466,59 @@ class Issue extends ExtendIssue
     }
 
     /**
-     * @param \Oro\Bundle\UserBundle\Entity\User[] $collaborators
+     * @param \Oro\Bundle\UserBundle\Entity\User[]|ArrayCollection $collaborators
      */
     public function setCollaborators($collaborators)
     {
         $this->collaborators = $collaborators;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTypeName()
+    {
+        switch ($this->type) {
+            case self::TYPE_BUG: {
+                return "bug";
+            }
+            case self::TYPE_STORY: {
+                return "story";
+            }
+            case self::TYPE_SUBTASK: {
+                return "subtask";
+            }
+        }
+    }
+
+    /**
+     * Returns a label for using in links, titles etc.
+     */
+    public function getLabel()
+    {
+        return $this->code.' - '.$this->summary;
+    }
+
+    /**
+     * @return Issue
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    /**
+     * @param Issue $parent
+     */
+    public function setParent($parent)
+    {
+        $this->parent = $parent;
+    }
+
+    public function addChild(Issue $childIssue)
+    {
+        $childIssue->setParent($this);
+
+        $this->children->add($childIssue);
     }
 }
