@@ -4,7 +4,7 @@ namespace IssuesBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-
+use IssuesBundle\Model\ExtendIssue;
 use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\Config;
 use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\ConfigField;
 use Oro\Bundle\OrganizationBundle\Entity\Organization;
@@ -31,6 +31,9 @@ use Oro\Bundle\UserBundle\Entity\User;
  *          },
  *          "activity"={
  *              "immutable"=true
+ *          },
+ *          "workflow"={
+ *              "active_workflow"="issue_resolving"
  *          }
  *      }
  * )
@@ -458,7 +461,7 @@ class Issue extends ExtendIssue
     }
 
     /**
-     * @return \Oro\Bundle\UserBundle\Entity\User[]
+     * @return \Oro\Bundle\UserBundle\Entity\User[]|ArrayCollection
      */
     public function getCollaborators()
     {
