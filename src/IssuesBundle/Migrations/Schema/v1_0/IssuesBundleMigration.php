@@ -42,12 +42,13 @@ class IssuesBundleMigration implements Migration, NoteExtensionAwareInterface
         $table->addColumn('owner_id', 'integer', ['notnull' => false]);
         $table->addColumn('updated_by_id', 'integer', ['notnull' => false]);
         $table->addColumn('reporter_id', 'integer', ['notnull' => false]);
-        $table->addColumn('createdAt', 'datetime', []);
-        $table->addColumn('updatedAt', 'datetime', []);
+        $table->addColumn('created_at', 'datetime', []);
+        $table->addColumn('updated_at', 'datetime', []);
         $table->addColumn('summary', 'string', ['length' => 255]);
         $table->addColumn('code', 'string', ['length' => 255]);
         $table->addColumn('description', 'string', ['length' => 255]);
         $table->addColumn('type', 'smallint', []);
+        $table->addColumn('deleted', 'smallint', []);
         $table->addColumn('parent_id', 'integer', ['notnull' => false]);
         $table->setPrimaryKey(['id']);
         $table->addIndex(['updated_by_id'], 'IDX_AADA29B1896DBBDE', []);

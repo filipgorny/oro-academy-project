@@ -22,7 +22,7 @@ class Priority
     /**
      * @var string
      *
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", unique=true)
      */
     private $name;
 
@@ -71,5 +71,10 @@ class Priority
     public function setLevel($level)
     {
         $this->level = $level;
+    }
+
+    public function __toString()
+    {
+        return $this->getName();
     }
 }

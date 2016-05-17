@@ -13,7 +13,7 @@
 
     {% if resource_granted('DELETE', entity) %}
         {{ UI.deleteButton({
-            'dataUrl': path('issues.issue_api_delete', {'id': entity.id}),
+            'dataUrl': path('issues.api.issue_delete', {'id': entity.id}),
             'dataRedirect': path('issues.issues_index'),
             'aCss': 'no-hash remove-button',
             'id': 'btn-remove-vehicle',

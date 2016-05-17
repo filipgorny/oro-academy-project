@@ -29,12 +29,20 @@ class LoadUserData extends AbstractFixture implements ContainerAwareInterface
     public function load(ObjectManager $manager)
     {
         $userManager = $this->container->get('oro_user.manager');
-        $organization = $manager->getRepository('OroOrganizationBundle:Organization')->getFirst();
+        $organization = $manager
+            ->getRepository('OroOrganizationBundle:Organization')
+            ->getFirst();
 
         $users = [
             self::USER_FIRST_USERNAME => ['firstname' => 'John', 'lastname' => 'Smith'],
             self::USER_SECOND_USERNAME => ['firstname' => 'Alice', 'lastname' => 'Jobs']
         ];
+
+        $group = $manager->getRepository('OroUserBundle:Group')
+            ->findOneBy(array('name' => 'Administrators'));
+
+        $role = $manager->getRepository('OroUserBundle:Role')
+            ->findOneBy(array('role' => 'ROLE_ADMINISTRATOR'));
 
         foreach ($users as $userName => $userData) {
             $user = $userManager->createUser();
@@ -46,6 +54,9 @@ class LoadUserData extends AbstractFixture implements ContainerAwareInterface
                 ->setOrganization($organization)
                 ->addOrganization($organization)
                 ->setEnabled(true);
+
+            $user->addGroup($group);
+            $user->addRole($role);
 
             $userManager->updateUser($user);
 

@@ -11,3 +11,25 @@ services:
             - @security.token_storage
         tags:
             - { name: oro_workflow.action, alias: remember_collaborant }
+
+    issues.form.type.issue:
+        class: IssuesBundle\Form\Type\IssueType
+        tags:
+            - { name: form.type, alias: issue_type }
+
+    issues.model.issue_update_stamp:
+        class: IssuesBundle\Model\Service\IssueUpdateStamp
+        arguments:
+            - @security.token_storage
+
+    issues.model.issue_code_generator:
+        class: IssuesBundle\Model\Service\IssueCodeGenerator
+
+    issues.listener.issue_persisting:
+        class: IssuesBundle\EventListeners\IssuesPersistingListener
+        arguments:
+            - @issues.model.issue_update_stamp
+            - @issues.model.issue_code_generator
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+            - { name: doctrine.event_listener, event: preUpdate }

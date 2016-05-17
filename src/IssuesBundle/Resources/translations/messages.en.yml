@@ -22,7 +22,7 @@ issues:
             label: Summary
         type:
             label: Type
-        updated_by:
+        updatedBy:
             label: Updated by
         owner:
             label: Owner
@@ -38,3 +38,10 @@ issues:
             label: Updated at
         parent:
             label: Parent issue
+        flashMessages:
+            create:
+                success: Issue created succesfuly
+            update:
+                success: Issue updated succesfuly
+            delete:
+                success: Issue deleted succesfuly

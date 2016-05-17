@@ -18,13 +18,20 @@ class LoadPriorities extends AbstractFixture
         ];
 
         foreach ($priorites as $level => $name) {
-            $priority = new Priority();
-            $priority->setLevel($level);
-            $priority->setName($name);
+            $existing = $manager->getRepository('IssuesBundle\Entity\Priority')
+                ->findOneBy(['name' => $name]);
 
-            $this->setReference('priority_'.$level, $priority);
+            if (!($existing)) {
+                $priority = new Priority();
+                $priority->setLevel($level);
+                $priority->setName($name);
 
-            $manager->persist($priority);
+                $this->setReference('priority_' . $level, $priority);
+
+                $manager->persist($priority);
+            } else {
+                $this->setReference('priority_' . $level, $existing);
+            }
         }
 
         $manager->flush();

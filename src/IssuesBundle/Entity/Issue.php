@@ -9,6 +9,7 @@ use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\Config;
 use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\ConfigField;
 use Oro\Bundle\OrganizationBundle\Entity\Organization;
 use Oro\Bundle\UserBundle\Entity\User;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -81,7 +82,7 @@ class Issue extends ExtendIssue
     /**
      * @var \DateTime
      *
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", name="created_at")
      * @ConfigField(
      *      defaultValues={
      *          "entity"={
@@ -95,7 +96,7 @@ class Issue extends ExtendIssue
     /**
      * @var \DateTime
      *
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", name="updated_at")
      * @ConfigField(
      *      defaultValues={
      *          "entity"={
@@ -110,6 +111,8 @@ class Issue extends ExtendIssue
      * @var string
      *
      * @ORM\Column(type="string")
+     * @Assert\Length(min=5, max=255)
+     * @Assert\NotBlank
      */
     protected $summary;
 
@@ -124,6 +127,8 @@ class Issue extends ExtendIssue
      * @var string
      *
      * @ORM\Column(type="string")
+     * @Assert\Length(min=5, max=255)
+     * @Assert\NotBlank
      */
     protected $description;
 
@@ -198,6 +203,13 @@ class Issue extends ExtendIssue
      *      )
      */
     private $collaborators;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(type="smallint")
+     */
+    private $deleted = false;
 
     public function __construct()
     {
@@ -481,16 +493,10 @@ class Issue extends ExtendIssue
      */
     public function getTypeName()
     {
-        switch ($this->type) {
-            case self::TYPE_BUG: {
-                return "bug";
-            }
-            case self::TYPE_STORY: {
-                return "story";
-            }
-            case self::TYPE_SUBTASK: {
-                return "subtask";
-            }
+        $dictionary = self::getTypesDictionary();
+
+        if (isset($dictionary[$this->type])) {
+            return $dictionary[$this->type];
         }
     }
 
@@ -523,5 +529,43 @@ class Issue extends ExtendIssue
         $childIssue->setParent($this);
 
         $this->children->add($childIssue);
+    }
+
+    public static function getTypesDictionary()
+    {
+        return [
+            self::TYPE_BUG => 'bug',
+            self::TYPE_STORY => 'story',
+            self::TYPE_SUBTASK => 'subtask',
+        ];
+    }
+
+    public static function getTypesDictionaryChoicesForNewEntries()
+    {
+        return [
+            self::TYPE_BUG => 'bug',
+            self::TYPE_STORY => 'story',
+        ];
+    }
+
+    public function __toString()
+    {
+        return $this->getLabel();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDeleted()
+    {
+        return (bool)$this->deleted;
+    }
+
+    /**
+     * @param bool $deleted
+     */
+    public function setDeleted($deleted)
+    {
+        $this->deleted = (bool)$deleted;
     }
 }

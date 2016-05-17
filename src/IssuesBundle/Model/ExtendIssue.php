@@ -1,7 +1,12 @@
 <?php
 
 namespace IssuesBundle\Model;
-
+//
+//if (!class_exists('IssuesBundle\Entity\ExtendIssue')): // I had to add this cause of issue with oro:migration:load which causes
+//    // "PHP Fatal error:  Cannot redeclare class IssuesBundle\Entity\ExtendIssue"
+//    // I have tried changing name etc. but no luck
+//    // This bug happens any time I am extending an entity class (class Foo extends Bar)
+//    // TODO find the reason of this strange error
 class ExtendIssue
 {
     /**
@@ -15,3 +20,4 @@ class ExtendIssue
     {
     }
 }
+//endif;

@@ -11,6 +11,11 @@ class IssueTest extends \PHPUnit_Framework_TestCase
     public function testSettingAndGettingValues()
     {
         $this->assertSettingAndGettingValuesKeepsConsistency('IssuesBundle\Entity\Issue');
+
+        $issue = new Issue();
+        $issue->setDeleted(true);
+
+        $this->assertTrue($issue->isDeleted());
     }
 
     public function testReturnsValidTypeName()
@@ -56,5 +61,30 @@ class IssueTest extends \PHPUnit_Framework_TestCase
         $issue->setChildren([$childIssue]);
 
         $this->assertEquals($childIssue->getParent(), $issue);
+    }
+
+    public function testReturnsTypeDictionary()
+    {
+        $dictionary = Issue::getTypesDictionary();
+
+        $this->assertTrue(is_array($dictionary));
+        $this->assertTrue(count($dictionary) > 1);
+    }
+
+    public function testReturnsTypesDictionaryChoicesForNewEntries()
+    {
+        $dictionary = Issue::getTypesDictionaryChoicesForNewEntries();
+
+        $this->assertTrue(is_array($dictionary));
+        $this->assertTrue(count($dictionary) > 1);
+    }
+
+    public function testConvertsToString()
+    {
+        $issue = new Issue();
+
+        $issue->setSummary('test');
+
+        $this->assertTrue((bool)strstr((string)$issue, 'test'));
     }
 }
