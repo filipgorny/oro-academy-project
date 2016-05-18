@@ -49,4 +49,9 @@ class Resolution
     {
         $this->name = $name;
     }
+
+    public function __toString()
+    {
+        return $this->getName();
+    }
 }

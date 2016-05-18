@@ -10,15 +10,22 @@ services:
         tags:
             - { name: oro_workflow.action, alias: remember_collaborant }
 
+    issues.workflow.action.set_resolution:
+        class: IssuesBundle\Workflow\Action\SetResolutionAction
+        arguments:
+            - @doctrine.orm.entity_manager
+        tags:
+            - { name: oro_workflow.action, alias: set_resolution }
+
     issues.form.type.issue:
         class: IssuesBundle\Form\Type\IssueType
         tags:
             - { name: form.type, alias: issue_type }
 
-    issues.form.type.issue_relations:
-        class: IssuesBundle\Form\Type\IssueRelationsType
+    issues.form.type.issue_resolution:
+        class: IssuesBundle\Form\Type\IssueResolutionType
         tags:
-            - { name: form.type, alias: issue_relations_type }
+            - { name: form.type, alias: issue_resolution_type }
 
     issues.model.issue_update_stamp:
         class: IssuesBundle\Model\Service\IssueUpdateStamp

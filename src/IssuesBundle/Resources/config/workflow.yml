@@ -33,12 +33,24 @@ workflows:
                 allowed_transitions:
                     - reopen
                 is_final: true
+        attributes:
+            resolution:
+                label: issues.issue.resolution.label
+                type: entity
+                property_path: resolution
+                options:
+                    class: IssuesBundle\Entity\Resolution
         transitions:
             start_progress:
                 is_start: true
                 label: 'Start progress'
                 step_to: in_progress
                 transition_definition: start_progress_definition
+                form_options:
+                    attribute_fields:
+                        resolution:
+                            options:
+                                required: true
             resolve:
                 label: 'Resolve'
                 step_to: resolved
@@ -71,4 +83,10 @@ workflows:
             stop_progress_definition:
                 post_actions:
                     - @remember_collaborant: []
+                    - @set_resolution:
+                        attribute: $resolution
+                        data:
+                            name: $resolution
+
+
 

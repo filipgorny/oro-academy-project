@@ -61,11 +61,6 @@
                     {{ UI.renderProperty('issues.issue.updatedAt.label'|trans, entity.updatedAt|oro_format_datetime) }}
                     {{ UI.renderProperty('issues.issue.priority.label'|trans, entity.priority.name) }}
 
-                    {% if entity.resolution is not null %}
-                        {{ UI.renderProperty('issues.issue.priority.label'|trans, entity.resolution.name) }}
-                    {% endif %}
-
-
                     {% if entity.reporter is not null %}
                         {%- set userData -%}
                             {%- if entity.reporter -%}
@@ -92,6 +87,10 @@
                     {{ UI.renderHtmlProperty('issues.issue.description.label'|trans, entity.description) }}
                 </div>
                 <div class="responsive-block">
+                    {% if entity.resolution is not null %}
+                        {{ UI.renderHtmlProperty('issues.issue.resolution.label'|trans, entity.resolution) }}
+                    {% endif %}
+
                     {% if entity.children|length > 0 %}
                         {% set subtasksData = [] %}
 
