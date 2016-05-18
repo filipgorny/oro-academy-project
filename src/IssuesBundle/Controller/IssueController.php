@@ -69,15 +69,19 @@ class IssueController extends Controller
         return $this->updateAction($issue, $request);
     }
 
+    // TODO solve ACL issue
+    // - when I add this entry, I am not able to edit an issue even if I'm admin
+    //
+    // * @Acl(
+    // *     id="issues.issue_update",
+    // *     type="entity",
+    // *     class="IssuesBundle:Issue",
+    // *     permission="UPDATE"
+    // * )
     /**
      * @Route("/update/{id}", name="issues.issue_update", requirements={"id"="\d+"})
      * @Template("IssuesBundle:Issue:update.html.twig")
-     * @Acl(
-     *     id="issues.issue_update",
-     *     type="entity",
-     *     class="IssuesBundle:Issue",
-     *     permission="UPDATE"
-     * )
+
      */
     public function updateAction(Issue $issue, Request $request)
     {
@@ -134,7 +138,7 @@ class IssueController extends Controller
     }
 
     /**
-     * @Route("/update/{id}", name="issues.api.issue_delete",
+     * @Route("/delete/{id}", name="issues.api.issue_delete",
      *     requirements={"id"="\d+"})
      */
     public function deleteAction(Issue $issue)

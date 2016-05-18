@@ -28,8 +28,12 @@ class IssueType extends AbstractType
                     'query_builder' => function (EntityRepository $er) {
                         return $er->createQueryBuilder('i')
                             ->where('i.type = :type')
+                            ->andWhere('i.deleted = :deleted')
                             ->orderBy('i.summary', 'ASC')
-                            ->setParameter('type', Issue::TYPE_STORY);
+                            ->setParameters([
+                                'type' => Issue::TYPE_STORY,
+                                'deleted' => false
+                            ]);
                     }
                 ]
             )
@@ -92,7 +96,15 @@ class IssueType extends AbstractType
                 [
                     'class' => 'IssuesBundle\Entity\Issue',
                     'label' => 'issues.issue.relatedIssues.label',
-                    'multiple' => true
+                    'multiple' => true,
+                    'query_builder' => function (EntityRepository $er) {
+                        return $er->createQueryBuilder('i')
+                            ->andWhere('i.deleted = :deleted')
+                            ->orderBy('i.summary', 'ASC')
+                            ->setParameters([
+                                'deleted' => false
+                            ]);
+                    }
                 ]
             );
     }
