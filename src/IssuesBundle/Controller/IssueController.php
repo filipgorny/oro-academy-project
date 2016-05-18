@@ -42,7 +42,7 @@ class IssueController extends Controller
     }
 
     /**
-     * @Route("/create", name="issues.issue_create")
+     * @Route("/create/{parentId}", name="issues.issue_create", defaults={"parentId" = 0})
      * @Template("IssuesBundle:Issue:update.html.twig")
      * @Acl(
      *     id="issues.issue_create",
@@ -51,9 +51,20 @@ class IssueController extends Controller
      *     permission="CREATE"
      * )
      */
-    public function createAction(Request $request)
+    public function createAction($parentId, Request $request)
     {
         $issue = new Issue();
+
+        if ($parentId > 0) {
+            $parentIssue = $this->getDoctrine()->getRepository('IssuesBundle:Issue')->find($parentId);
+
+            if ($parentIssue === null) {
+                throw new NotFoundHttpException('Parent issue not found.');
+            }
+
+            $issue->setParent($parentIssue);
+            $issue->setType(Issue::TYPE_SUBTASK);
+        }
 
         return $this->updateAction($issue, $request);
     }

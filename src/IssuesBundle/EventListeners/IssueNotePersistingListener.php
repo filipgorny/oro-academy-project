@@ -5,21 +5,16 @@ namespace IssuesBundle\EventListeners;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use IssuesBundle\Entity\Issue;
 use IssuesBundle\Model\Service\Collaboration;
-use IssuesBundle\Model\Service\IssueCodeGenerator;
 use IssuesBundle\Model\Service\IssueUpdateStamp;
+use Oro\Bundle\NoteBundle\Entity\Note;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
-class IssuesPersistingListener
+class IssueNotePersistingListener
 {
     /**
      * @var IssueUpdateStamp
      */
     private $issueUpdateStamp;
-
-    /**
-     * @var IssueCodeGenerator
-     */
-    private $issueCodeGenerator;
 
     /**
      * @var Collaboration
@@ -33,33 +28,27 @@ class IssuesPersistingListener
 
     public function __construct(
         IssueUpdateStamp $issueUpdateStamp,
-        IssueCodeGenerator $issueCodeGenerator,
         Collaboration $collaboration,
         TokenStorageInterface $tokenStorage
     ) {
         $this->issueUpdateStamp = $issueUpdateStamp;
-        $this->issueCodeGenerator = $issueCodeGenerator;
         $this->collaboration = $collaboration;
         $this->tokenStorage = $tokenStorage;
     }
-    
+
     public function prePersist(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
 
-        if ($entity instanceof Issue) {
-            $this->issueUpdateStamp->populateCreationAndUpdateStamps($entity);
+        if ($entity instanceof Note) {
+            $target = $entity->getTarget();
 
-            $token = $this->tokenStorage->getToken();
+            if ($target instanceof Issue) {
+                $this->issueUpdateStamp->populateCreationAndUpdateStamps($target);
 
-            if ($token && $token->getUser()) {
-                $this->collaboration->markUserAsCollaborator($token->getUser(), $entity);
-            }
-
-            $code = $entity->getCode();
-
-            if (empty($code)) {
-                $this->issueCodeGenerator->populateCode($args->getEntityManager(), $entity);
+                if ($this->tokenStorage->getToken() && $this->tokenStorage->getToken()->getUser()) {
+                    $this->collaboration->markUserAsCollaborator($this->tokenStorage->getToken()->getUser(), $target);
+                }
             }
         }
     }

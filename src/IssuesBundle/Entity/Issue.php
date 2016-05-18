@@ -568,4 +568,9 @@ class Issue extends ExtendIssue
     {
         $this->deleted = (bool)$deleted;
     }
+
+    public function mayHaveSubtasks()
+    {
+        return $this->type === self::TYPE_STORY;
+    }
 }

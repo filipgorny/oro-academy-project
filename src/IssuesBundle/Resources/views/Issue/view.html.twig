@@ -21,6 +21,18 @@
             'entity_label': 'issues.issue.entity_label'|trans,
         }) }}
     {% endif %}
+
+    {% if entity.mayHaveSubtasks %}
+        {% if resource_granted('EDIT', entity) %}
+            {{ UI.button({
+                'path':  path('issues.issue_create', { parentId: entity.id }),
+                'aCss':  'btn btn-large btn-success action-button',
+                'iCss':  'icon-ticket',
+                'label': 'issues.add_subtask'|trans,
+                'title': 'issues.add_subtask'|trans,
+            }) }}
+        {% endif %}
+    {% endif %}
 {% endblock navButtons %}
 
 {% block pageHeader %}
@@ -45,8 +57,8 @@
                     {{ UI.renderProperty('issues.issue.code.label'|trans, entity.code) }}
                     {{ UI.renderProperty('issues.issue.summary.label'|trans, entity.summary) }}
                     {{ UI.renderProperty('issues.issue.type.label'|trans, entity.typeName) }}
-                    {{ UI.renderProperty('issues.issue.createdAt.label'|trans, entity.createdAt|oro_format_date) }}
-                    {{ UI.renderProperty('issues.issue.updatedAt.label'|trans, entity.updatedAt|oro_format_date) }}
+                    {{ UI.renderProperty('issues.issue.createdAt.label'|trans, entity.createdAt|oro_format_datetime) }}
+                    {{ UI.renderProperty('issues.issue.updatedAt.label'|trans, entity.updatedAt|oro_format_datetime) }}
                     {{ UI.renderProperty('issues.issue.priority.label'|trans, entity.priority.name) }}
 
                     {% if entity.resolution is not null %}
@@ -77,7 +89,9 @@
                         {{ UI.renderHtmlProperty('issues.issue.assignee.label'|trans, userData) }}
                     {% endif %}
 
-
+                    {{ UI.renderHtmlProperty('issues.issue.description.label'|trans, entity.description) }}
+                </div>
+                <div class="responsive-block">
                     {% if entity.children|length > 0 %}
                         {% set subtasksData = [] %}
 
@@ -90,7 +104,6 @@
 
                         {{ UI.renderHtmlProperty('issues.issue.children.label'|trans,  UI.renderList(subtasksData)) }}
                     {% endif %}
-
 
                     {% if entity.relatedIssues|length > 0 %}
                         {% set relatedIssuesData = [] %}
@@ -105,7 +118,6 @@
                         {{ UI.renderHtmlProperty('issues.issue.relatedIssues.label'|trans,  UI.renderList(relatedIssuesData)) }}
                     {% endif %}
 
-
                     {% if entity.collaborators|length > 0 %}
                         {% set collaboratorsData = [] %}
 
@@ -119,10 +131,6 @@
                         {{ UI.renderHtmlProperty('issues.issue.collaborators.label'|trans,  UI.renderList(collaboratorsData)) }}
                     {% endif %}
 
-
-                    {{ UI.renderHtmlProperty('issues.issue.description.label'|trans, entity.description) }}
-                </div>
-                <div class="responsive-block">
                     {{ entityConfig.renderDynamicFields(entity) }}
                 </div>
             </div>

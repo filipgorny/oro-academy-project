@@ -20,6 +20,20 @@ class IssueType extends AbstractType
     {
         $builder
             ->add(
+                'parent',
+                'entity',
+                [
+                    'class' => 'IssuesBundle\Entity\Issue',
+                    'label' => 'issues.issue.parent.label',
+                    'query_builder' => function (EntityRepository $er) {
+                        return $er->createQueryBuilder('i')
+                            ->where('i.type = :type')
+                            ->orderBy('i.summary', 'ASC')
+                            ->setParameter('type', Issue::TYPE_STORY);
+                    }
+                ]
+            )
+            ->add(
                 'type',
                 'choice',
                 [

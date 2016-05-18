@@ -1,8 +1,6 @@
 services:
     issues.model.collaboration:
         class: IssuesBundle\Model\Service\Collaboration
-        arguments:
-            - @doctrine.orm.entity_manager
 
     issues.workflow.action.remember_collaborant:
         class: IssuesBundle\Workflow\Action\RememberCollaboratorAction
@@ -17,6 +15,11 @@ services:
         tags:
             - { name: form.type, alias: issue_type }
 
+    issues.form.type.issue_relations:
+        class: IssuesBundle\Form\Type\IssueRelationsType
+        tags:
+            - { name: form.type, alias: issue_relations_type }
+
     issues.model.issue_update_stamp:
         class: IssuesBundle\Model\Service\IssueUpdateStamp
         arguments:
@@ -30,6 +33,18 @@ services:
         arguments:
             - @issues.model.issue_update_stamp
             - @issues.model.issue_code_generator
+            - @issues.model.collaboration
+            - @security.token_storage
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+            - { name: doctrine.event_listener, event: preUpdate }
+
+    issues.listener.issue_note_persisting:
+        class: IssuesBundle\EventListeners\IssueNotePersistingListener
+        arguments:
+            - @issues.model.issue_update_stamp
+            - @issues.model.collaboration
+            - @security.token_storage
         tags:
             - { name: doctrine.event_listener, event: prePersist }
             - { name: doctrine.event_listener, event: preUpdate }

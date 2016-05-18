@@ -2,6 +2,7 @@
 
 namespace IssuesBundle\Workflow\Action;
 
+use Doctrine\ORM\EntityManager;
 use IssuesBundle\Model\Service\Collaboration;
 use Oro\Bundle\WorkflowBundle\Exception\InvalidParameterException;
 use Oro\Bundle\WorkflowBundle\Model\Action\ActionInterface;
@@ -22,11 +23,14 @@ class RememberCollaboratorAction implements ActionInterface
     protected $tokenStorage;
 
     /**
-     * RememberCollaborantAction constructor.
+     * RememberCollaboratorAction constructor.
      * @param Collaboration $collaboration
+     * @param TokenStorageInterface $tokenStorage
      */
-    public function __construct(Collaboration $collaboration, TokenStorageInterface $tokenStorage)
-    {
+    public function __construct(
+        Collaboration $collaboration,
+        TokenStorageInterface $tokenStorage
+    ) {
         $this->collaboration = $collaboration;
         $this->tokenStorage = $tokenStorage;
     }
@@ -39,7 +43,10 @@ class RememberCollaboratorAction implements ActionInterface
     public function execute($context)
     {
         if ($this->tokenStorage->getToken()) {
-            $this->collaboration->markUserAsCollaborator($this->tokenStorage->getToken()->getUser(), $context->getEntity());
+            $this->collaboration->markUserAsCollaborator(
+                $this->tokenStorage->getToken()->getUser(),
+                $context->getEntity()
+            );
         }
     }
 

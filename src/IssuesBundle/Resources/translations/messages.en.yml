@@ -45,3 +45,4 @@ issues:
                 success: Issue updated succesfuly
             delete:
                 success: Issue deleted succesfuly
+    add_subtask: Add subtask

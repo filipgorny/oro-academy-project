@@ -43,20 +43,29 @@
 {% endblock pageHeader %}
 
 {% block content_data %}
-    {% set id = 'vehicle-edit' %}
+    {% set id = 'issue-edit' %}
+
+    {% set entity = form.vars.value %}
+
+    {% set fields = [
+    form_row(form.summary),
+    form_row(form.type),
+    form_row(form.assignee),
+    form_row(form.priority),
+    form_row(form.description),
+    form_row(form.relatedIssues),
+    ] %}
+
+    {% if entity.parent %}
+        {% set fields = [form_row(form.parent)]|merge(fields) %}
+    {% endif %}
 
     {% set dataBlocks = [{
     'title': 'General'|trans,
     'class': 'active',
     'subblocks': [{
     'title': '',
-    'data': [
-    form_row(form.summary),
-    form_row(form.type),
-    form_row(form.assignee),
-    form_row(form.priority),
-    form_row(form.description),
-    ]
+    'data': fields
     }]
     }]
     %}

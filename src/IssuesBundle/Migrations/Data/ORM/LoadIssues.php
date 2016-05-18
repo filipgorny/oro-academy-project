@@ -14,13 +14,14 @@ class LoadIssues extends AbstractFixture implements DependentFixtureInterface
     {
         $issue = new Issue();
 
-        $user = $manager->getRepository('Oro\Bundle\UserBundle\Entity\User')->findOneBy(['username' => 'admin']);
+        $user = $this->getReference(LoadUsers::USER_FIRST_USERNAME);
 
-        $manager->persist($user);
-        
         if (!$user) {
-            throw new \DomainException('Admin user not found, ensure that fixtures from UserBundle'
-                .' are executed first.');
+            throw new \DomainException(
+                'Admin user not found, ensure that '
+                .' fixtures from UserBundle'
+                .' are executed first.'
+            );
         }
 
         $organization = $user->getOrganization();
@@ -97,12 +98,9 @@ class LoadIssues extends AbstractFixture implements DependentFixtureInterface
     public function getDependencies()
     {
         return [
+            'IssuesBundle\Migrations\Data\ORM\LoadUsers',
             'IssuesBundle\Migrations\Data\ORM\LoadPriorities',
             'IssuesBundle\Migrations\Data\ORM\LoadResolutions',
-//            'Oro\Bundle\UserBundle\Migrations\Data\ORM\LoadAdminUserData' // I need an existing user account, but with
-                                                                            // this dependency, when installing in test environment
-                                                                            // I got
-                                                                            // SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'IS_AUTHENTICATED_ANONYMOUSLY' for key 'UNIQ_673F65E757698A6A'
         ];
     }
 }

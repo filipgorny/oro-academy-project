@@ -87,4 +87,16 @@ class IssueTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue((bool)strstr((string)$issue, 'test'));
     }
+
+    public function testStoriesMayHaveSubtasks()
+    {
+        $issue = new Issue();
+        $issue->setType(Issue::TYPE_BUG);
+
+        $this->assertFalse($issue->mayHaveSubtasks());
+
+        $issue->setType(Issue::TYPE_STORY);
+
+        $this->assertTrue($issue->mayHaveSubtasks());
+    }
 }
