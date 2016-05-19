@@ -1,0 +1,162 @@
+# required fields: code, summary, type, priority, status, resolution, reporter, assignee, created, updated
+datagrid:
+    issues-grid:
+        source:
+            type: orm
+            query:
+                select:
+                    - issue.id
+                    - issue.code
+                    - issue.summary
+                    - priority.name as priorityName
+                    - resolution.name as resolutionName
+                    - issue.type
+                    - CONCAT(reporter.firstName, CONCAT(' ', reporter.lastName)) as reporterName
+                    - CONCAT(assignee.firstName, CONCAT(' ', assignee.lastName)) as assigneeName
+                    - issue.createdAt
+                    - issue.updatedAt
+                    - workflowStep.label as workflowStepLabel
+                from:
+                    - { table: IssuesBundle:Issue, alias: issue }
+                join:
+                    left:
+                        - { join: issue.priority, alias: priority}
+                        - { join: issue.resolution, alias: resolution}
+                        - { join: issue.workflowStep, alias: workflowStep }
+                        - { join: issue.reporter, alias: reporter }
+                        - { join: issue.assignee, alias: assignee }
+                from:
+                    { table: IssuesBundle:Issue, alias:issue }
+            where:
+                and:
+                    - issue.deleted = false
+        columns:
+            code:
+                label: issues.issue.code.label
+            summary:
+                label: issues.issue.summary.label
+            type:
+                frontend_type: string
+                type: callback
+                label: issues.issue.type.label
+                callable: "@issues.formatter.issue_formatter->getTypeCallback"
+            priorityName:
+                label: issues.issue.priority.label
+                label: issues.issue.type.label
+            reporterName:
+                type: twig
+                label: issues.issue.reporter.label
+                template: IssuesBundle:Issue:grid/property/user.html.twig
+            assigneeName:
+                type: twig
+                label: issues.issue.assignee.label
+                template: IssuesBundle:Issue:grid/property/user.html.twig
+            createdAt:
+                label: issues.issue.createdAt.label
+                frontend_type: date
+            updatedAt:
+                label: issues.issue.updatedAt.label
+                frontend_type: date
+            resolutionName:
+                label: issues.issue.resolution.label
+            workflowStepLabel:
+                label: issues.issue.status.label
+        sorters:
+            columns:
+                code:
+                    data_name: issue.code
+                type:
+                    data_name: issue.type
+                summary:
+                    data_name: issue.summary
+                priorityName:
+                    data_name: priority.level
+                resolutionName:
+                    data_name: resolution.name
+                reporterName:
+                    data_name: reporterName
+                assigneeName:
+                    data_name: assigneeName
+                updatedAt:
+                    data_name: issue.updatedAt
+                createdAt:
+                    data_name: issue.createdAt
+                workflowStepLabel:
+                    data_name: workflowStep.stepOrder
+            default:
+                updatedAt: DESC
+        properties:
+            id: ~
+            update_link:
+                type: url
+                route: issues.issue_update
+                params:
+                    - id
+            view_link:
+                type: url
+                route: issues.issue_view
+                params:
+                    - id
+            delete_link:
+                type: url
+                route: issues.issue_delete
+                params:
+                    - id
+        actions:
+            view:
+                type: navigate
+                #acl_resource: issues.issue_view
+                label: oro.grid.action.view
+                icon: eye-open
+                link: view_link
+                rowAction: true
+            update:
+                type: navigate
+                #acl_resource: issues.issue_update
+                label: oro.grid.action.update
+                icon: edit
+                link: update_link
+            delete:
+                type: delete
+                #acl_resource: issues.issue_delete
+                label: oro.grid.action.delete
+                icon: trash
+                link: delete_link
+        mass_actions:
+            delete:
+                type: delete
+                entity_name: "IssuesBundle\Entity\Issue"
+                data_identifier: issue.id
+                #acl_resource: issue.issue_delete
+                label: Delete
+                icon: trash
+        filters:
+            columns:
+                code:
+                    type: string
+                    data_name: issue.code
+                type:
+                    type: choice
+                    data_name: issue.type
+                    options:
+                        field_options:
+                            multiple: true
+                            choices: "@issues.formatter.issue_formatter->getTypesDictionary"
+                priorityName:
+                    type: string
+                    data_name: priorityName
+                resolutionName:
+                    type: string
+                    data_name: resolutionName
+                reporterName:
+                    type: string
+                    data_name: reporterName
+                assigneeName:
+                    type: string
+                    data_name: assigneeName
+                createdAt:
+                    type: datetime
+                    data_name: issue.createdAt
+                updatedAt:
+                    type: datetime
+                    data_name: issue.updatedAt

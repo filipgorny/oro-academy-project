@@ -1,12 +1,13 @@
 <?php
 
-namespace IssuesBundle\Migrations\Data\ORM;
+namespace IssuesBundle\Migrations\Data\Demo\ORM;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use IssuesBundle\Entity\Issue;
+use IssuesBundle\Migrations\Data\ORM\LoadUsers;
 
 class LoadIssues extends AbstractFixture implements DependentFixtureInterface
 {

@@ -16,7 +16,7 @@ class IssuesControllersTest extends WebTestCase
 {
     protected function setUp()
     {
-        $this->initClient(array(), $this->generateBasicAuthHeader());
+        $this->initClient([], array_merge($this->generateBasicAuthHeader(), ['HTTP_X-CSRF-Header' => 1]));
 
         $this->loadFixtures([
             'IssuesBundle\\Tests\\Functional\\DataFixtures\\LoadUserData',

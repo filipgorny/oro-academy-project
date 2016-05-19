@@ -38,6 +38,8 @@ issues:
             label: Updated at
         parent:
             label: Parent issue
+        status:
+            label: Status
         flashMessages:
             create:
                 success: Issue created succesfuly

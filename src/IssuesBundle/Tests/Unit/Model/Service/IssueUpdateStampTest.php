@@ -44,7 +44,5 @@ class IssueUpdateStampTest extends \PHPUnit_Framework_TestCase
         $this->assertNotEquals($previousUpdatedAtDate, $issue->getUpdatedAt());
 
         $this->assertEquals($user, $issue->getUpdatedBy());
-        $this->assertEquals($user, $issue->getOwner());
-        $this->assertEquals($user, $issue->getReporter());
     }
 }

@@ -18,11 +18,14 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class IssueController extends Controller
 {
     /**
-     * @Route("/", name="issues.issues_index", requirements={"id"="\d+"})
+     * @Route("/", name="issues.issues_index")
+     * @Template
      */
-    public function indexAction(Issue $issue)
+    public function indexAction()
     {
-        return new Response();
+        return [
+            'entity_class' => 'IssueBundle\Entity\Issue'
+        ];
     }
 
     /**
@@ -41,15 +44,15 @@ class IssueController extends Controller
         );
     }
 
+//* @Acl(
+//*     id="issues.issue_create",
+//*     type="entity",
+//*     class="IssuesBundle:Issue",
+//*     permission="CREATE"
+//* )
     /**
      * @Route("/create/{parentId}", name="issues.issue_create", defaults={"parentId" = 0})
      * @Template("IssuesBundle:Issue:update.html.twig")
-     * @Acl(
-     *     id="issues.issue_create",
-     *     type="entity",
-     *     class="IssuesBundle:Issue",
-     *     permission="CREATE"
-     * )
      */
     public function createAction($parentId, Request $request)
     {
@@ -138,7 +141,7 @@ class IssueController extends Controller
     }
 
     /**
-     * @Route("/delete/{id}", name="issues.api.issue_delete",
+     * @Route("/delete/{id}", name="issues.issue_delete",
      *     requirements={"id"="\d+"})
      */
     public function deleteAction(Issue $issue)

@@ -107,6 +107,26 @@ class IssueTypeText extends TypeTestCase
             ->getMock();
 
 
+
+
+        $queryBuilderChainMethods = ['where', 'orderBy', 'setParameters', 'getQuery', 'getSql'];
+
+        $queryBuilder = $this->getMockBuilder('Doctrine\ORM\QueryBuilder')
+            ->setMethods($queryBuilderChainMethods)
+            ->setConstructorArgs([$entityManager])
+            ->getMock();
+
+        foreach ($queryBuilderChainMethods as $method) {
+            $queryBuilder
+                ->method($method)
+                ->will($this->returnValue($queryBuilder));
+        }
+
+
+        $repository->method('createQueryBuilder')
+            ->will($this->returnValue($queryBuilder));
+
+
         $entityManager->expects($this->any())
             ->method('getRepository')
             ->will($this->returnValue($repository));

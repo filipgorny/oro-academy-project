@@ -34,7 +34,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *              "immutable"=true
  *          },
  *          "workflow"={
- *              "active_workflow"="issue_resolving"
+ *              "active_workflow"="issue_resolving",
+ *              "show_step_in_grid"=false
  *          },
  *          "grouping"={"groups"={"activity"}},
  *          "activity"={
@@ -553,6 +554,17 @@ class Issue extends ExtendIssue
             self::TYPE_BUG => 'bug',
             self::TYPE_STORY => 'story',
         ];
+    }
+
+    /**
+     * @param $type
+     * @return string|null
+     */
+    public static function translateType($type)
+    {
+        if (in_array($type, self::getTypesDictionary())) {
+            return self::getTypesDictionary()[$type];
+        }
     }
 
     public function __toString()

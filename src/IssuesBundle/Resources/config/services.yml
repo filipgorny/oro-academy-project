@@ -55,3 +55,6 @@ services:
         tags:
             - { name: doctrine.event_listener, event: prePersist }
             - { name: doctrine.event_listener, event: preUpdate }
+
+    issues.formatter.issue_formatter:
+        class: IssuesBundle\Formatter\IssueFormatter
