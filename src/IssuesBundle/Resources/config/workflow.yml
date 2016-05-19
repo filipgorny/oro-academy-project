@@ -87,6 +87,3 @@ workflows:
                         attribute: $resolution
                         data:
                             name: $resolution
-
-
-

@@ -1,19 +1,27 @@
 <?php
 
-namespace IssuesBundle\Migrations\Schema\v1_0;
+namespace IssuesBundle\Migrations\Schema;
 
 use Doctrine\DBAL\Schema\Schema;
+use Oro\Bundle\ActivityBundle\Migration\Extension\ActivityExtension;
+use Oro\Bundle\ActivityBundle\Migration\Extension\ActivityExtensionAwareInterface;
+use Oro\Bundle\MigrationBundle\Migration\Installation;
 use Oro\Bundle\MigrationBundle\Migration\Migration;
 use Oro\Bundle\MigrationBundle\Migration\QueryBag;
 use Oro\Bundle\NoteBundle\Migration\Extension\NoteExtension;
 use Oro\Bundle\NoteBundle\Migration\Extension\NoteExtensionAwareInterface;
 
-class IssuesBundleMigration implements Migration, NoteExtensionAwareInterface
+class IssuesBundleInstaller implements Installation, NoteExtensionAwareInterface, ActivityExtensionAwareInterface
 {
     /**
      * @var NoteExtension
      */
     protected $noteExtension;
+
+    /**
+     * @var ActivityExtension
+     */
+    protected $activityExtension;
 
     public function up(Schema $schema, QueryBag $queries)
     {
@@ -24,6 +32,7 @@ class IssuesBundleMigration implements Migration, NoteExtensionAwareInterface
         $this->createIssuePivotTables($schema);
 
         $this->noteExtension->addNoteAssociation($schema, 'oro_issues');
+        $this->activityExtension->addActivityAssociation($schema, 'oro_email', 'oro_issues');
     }
 
     /**
@@ -107,5 +116,18 @@ class IssuesBundleMigration implements Migration, NoteExtensionAwareInterface
         $table = $schema->createTable('oro_issues_collaborators');
         $table->addColumn('issue_id', 'integer', []);
         $table->addColumn('user_id', 'integer', []);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getMigrationVersion()
+    {
+        return 'v1_0';
+    }
+
+    public function setActivityExtension(ActivityExtension $activityExtension)
+    {
+        $this->activityExtension = $activityExtension;
     }
 }

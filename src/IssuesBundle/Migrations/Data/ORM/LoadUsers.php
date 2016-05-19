@@ -64,7 +64,7 @@ class LoadUsers extends AbstractFixture implements
             $this->setReference($user->getUsername(), $user);
         }
 
-        $this->changeAdminPassword($manager);
+        //$this->changeAdminPassword($manager);
     }
 
     private function changeAdminPassword(ObjectManager $manager)

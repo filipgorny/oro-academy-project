@@ -1,7 +1,7 @@
 issues:
     issue:
         entity_label: Issue
-        entity_label_plural: Issues
+        entity_plural_label: Issues
         id:
             label: Id
         assignee:

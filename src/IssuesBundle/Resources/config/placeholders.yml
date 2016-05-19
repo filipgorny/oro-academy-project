@@ -1,0 +1,7 @@
+items:
+    oro_send_email_button:
+        template: IssuesBundle:Issue:activity/button.html.twig
+        acl: oro_email_email_create
+    oro_send_email_link:
+        template: IssuesBundle:Issue:activity/link.html.twig
+        acl: oro_email_email_create
