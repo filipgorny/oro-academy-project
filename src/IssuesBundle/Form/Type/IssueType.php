@@ -106,6 +106,13 @@ class IssueType extends AbstractType
                             ]);
                     }
                 ]
+            )
+            ->add(
+                'tags',
+                'oro_tag_select',
+                [
+                    'label' => 'oro.tag.entity_plural_label'
+                ]
             );
     }
 
