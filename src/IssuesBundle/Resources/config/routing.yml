@@ -1,0 +1,14 @@
+issues:
+    resource: "@IssuesBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+issues_api_rest:
+    resource:     "@IssuesBundle/Controller/Api/Rest/IssueRestController.php"
+    type:         rest
+    prefix:       api/rest/{version}/
+    requirements:
+        version:  latest|v1
+        _format:  json
+    defaults:
+        version:  latest

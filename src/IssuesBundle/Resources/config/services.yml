@@ -5,15 +5,15 @@ services:
     issues.workflow.action.remember_collaborant:
         class: IssuesBundle\Workflow\Action\RememberCollaboratorAction
         arguments:
-            - @issues.model.collaboration
-            - @security.token_storage
+            - "@issues.model.collaboration"
+            - "@security.token_storage"
         tags:
             - { name: oro_workflow.action, alias: remember_collaborant }
 
     issues.workflow.action.set_resolution:
         class: IssuesBundle\Workflow\Action\SetResolutionAction
         arguments:
-            - @doctrine.orm.entity_manager
+            - "@doctrine.orm.entity_manager"
         tags:
             - { name: oro_workflow.action, alias: set_resolution }
 
@@ -21,6 +21,11 @@ services:
         class: IssuesBundle\Form\Type\IssueType
         tags:
             - { name: form.type, alias: issue_type }
+
+    issues.form.type.issue_api:
+        class: IssuesBundle\Form\Type\IssueApiType
+        tags:
+            - { name: form.type, alias: issue_api_type }
 
     issues.form.type.issue_resolution:
         class: IssuesBundle\Form\Type\IssueResolutionType
@@ -30,7 +35,7 @@ services:
     issues.model.issue_update_stamp:
         class: IssuesBundle\Model\Service\IssueUpdateStamp
         arguments:
-            - @security.token_storage
+            - "@security.token_storage"
 
     issues.model.issue_code_generator:
         class: IssuesBundle\Model\Service\IssueCodeGenerator
@@ -38,10 +43,10 @@ services:
     issues.listener.issue_persisting:
         class: IssuesBundle\EventListeners\IssuesPersistingListener
         arguments:
-            - @issues.model.issue_update_stamp
-            - @issues.model.issue_code_generator
-            - @issues.model.collaboration
-            - @security.token_storage
+            - "@issues.model.issue_update_stamp"
+            - "@issues.model.issue_code_generator"
+            - "@issues.model.collaboration"
+            - "@security.token_storage"
         tags:
             - { name: doctrine.event_listener, event: prePersist }
             - { name: doctrine.event_listener, event: preUpdate }
@@ -49,12 +54,35 @@ services:
     issues.listener.issue_note_persisting:
         class: IssuesBundle\EventListeners\IssueNotePersistingListener
         arguments:
-            - @issues.model.issue_update_stamp
-            - @issues.model.collaboration
-            - @security.token_storage
+            - "@issues.model.issue_update_stamp"
+            - "@issues.model.collaboration"
+            - "@security.token_storage"
         tags:
             - { name: doctrine.event_listener, event: prePersist }
             - { name: doctrine.event_listener, event: preUpdate }
 
     issues.formatter.issue_formatter:
         class: IssuesBundle\Formatter\IssueFormatter
+
+    issues.issue_manager.api:
+        class: Oro\Bundle\SoapBundle\Entity\Manager\ApiEntityManager
+        parent: oro_soap.manager.entity_manager.abstract
+        arguments:
+            - "IssuesBundle::Issue"
+            - "@doctrine.orm.entity_manager"
+
+    issues.form.issue_api:
+        class: Symfony\Component\Form\Form
+        factory_method: createNamed
+        factory_service: form.factory
+        arguments:
+            - 'issue_api_type'
+            - 'issue_api_type'
+
+    issues.form.handler.issue:
+        class: IssuesBundle\Form\Handler\IssueFormHandler
+        scope: request
+        arguments:
+          - "@issues.form.issue_api"
+          - "@request"
+          - "@doctrine.orm.entity_manager"

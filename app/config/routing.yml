@@ -1,7 +1,5 @@
 issues:
-    resource: "@IssuesBundle/Controller/"
-    type:     annotation
-    prefix:   /
+    resource: '@IssuesBundle/Resources/config/routing.yml'
 
 #
 # 3rd party routes
