@@ -2,6 +2,7 @@
 {% import 'OroUIBundle::macros.html.twig' as UI %}
 {% import 'OroUserBundle::macros.html.twig' as U %}
 {% import 'OroEntityConfigBundle::macros.html.twig' as entityConfig %}
+{#{% import 'OroTagBundle::macros.html.twig' as TAG %}#}
 
 {% block navButtons %}
     {% if resource_granted('EDIT', entity) %}
@@ -10,10 +11,9 @@
             'entity_label': 'issues.issue.entity_label'|trans
         }) }}
     {% endif %}
-
     {% if resource_granted('DELETE', entity) %}
         {{ UI.deleteButton({
-            'dataUrl': path('issues.api.issue_delete', {'id': entity.id}),
+            'dataUrl': path('issues.issue_delete', {'id': entity.id}),
             'dataRedirect': path('issues.issues_index'),
             'aCss': 'no-hash remove-button',
             'id': 'btn-remove-vehicle',
@@ -131,6 +131,7 @@
                     {% endif %}
 
                     {{ entityConfig.renderDynamicFields(entity) }}
+                    {#{{ TAG.renderView(entity) }}#}
                 </div>
             </div>
         </div>
