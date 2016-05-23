@@ -40,6 +40,11 @@ services:
     issues.model.issue_code_generator:
         class: IssuesBundle\Model\Service\IssueCodeGenerator
 
+    issues.model.issue_deletion:
+        class: IssuesBundle\Model\Service\IssueDeletion
+        arguments:
+            - "@doctrine.orm.entity_manager"
+
     issues.listener.issue_persisting:
         class: IssuesBundle\EventListeners\IssuesPersistingListener
         arguments:

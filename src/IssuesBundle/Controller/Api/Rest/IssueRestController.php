@@ -5,6 +5,7 @@ namespace IssuesBundle\Controller\Api\Rest;
 use FOS\RestBundle\Controller\Annotations\NamePrefix;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
+use FOS\RestBundle\Util\Codes;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Oro\Bundle\SoapBundle\Controller\Api\Rest\RestController;
 use Symfony\Component\HttpFoundation\Request;
@@ -54,7 +55,15 @@ class IssueRestController extends RestController
      */
     public function deleteAction($id)
     {
-        return $this->handleDeleteRequest($id);
+        $isProcessed = $this->get('issues.model.issue_deletion')->deleteIssueById($id);
+
+        if (!$isProcessed) {
+            $view = $this->view(null, Codes::HTTP_NOT_FOUND);
+        } else {
+            $view = $this->view(null, Codes::HTTP_NO_CONTENT);
+        }
+
+        return $this->buildResponse($view, self::ACTION_DELETE, ['id' => $id, 'success' => $isProcessed]);
     }
 
     /**

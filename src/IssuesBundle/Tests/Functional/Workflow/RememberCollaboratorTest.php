@@ -48,7 +48,9 @@ class RememberCollaboratorTest extends WebTestCase
         $transition = $workflow->getTransitionManager()->getTransition('resolve');
         $transition->transit($workflowItem);
 
-        $this->assertTrue($issue->getCollaborators()->contains($this->getReference(LoadUserData::USER_SECOND_USERNAME)));
+        $this->assertTrue(
+            $issue->getCollaborators()->contains($this->getReference(LoadUserData::USER_SECOND_USERNAME))
+        );
         $this->assertEquals(1, $issue->getCollaborators()->count());
     }
 

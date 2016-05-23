@@ -111,7 +111,6 @@ class IssueController extends Controller
                 $issue->setAssignee($currentUser);
             }
 
-            $issue->setOwner($currentUser);
             $issue->setReporter($currentUser);
 
             $em = $this->getDoctrine()->getManager();

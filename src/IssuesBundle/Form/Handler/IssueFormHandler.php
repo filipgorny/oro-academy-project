@@ -60,23 +60,15 @@ class IssueFormHandler
      */
     public function process(Issue $entity)
     {
-        $entity->setOwner($this->tokenStorage->getToken()->getUser());
-dump($entity->getOwner());
-        exit;
         $this->form->setData($entity);
 
         if (in_array($this->request->getMethod(), array('POST', 'PUT'))) {
             $this->form->submit($this->request);
-            var_dump($this->form->getData());
-            exit;
 
             if ($this->form->isValid()) {
                 $this->onSuccess($entity);
 
                 return true;
-            } else {
-                dump($this->getErrorMessages($this->form));
-                exit;
             }
         }
 

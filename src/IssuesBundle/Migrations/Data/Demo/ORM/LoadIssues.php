@@ -30,7 +30,6 @@ class LoadIssues extends AbstractFixture
         $priority = $this->loadPriority($manager);
 
         $issue->setOrganization($organization);
-        $issue->setOwner($user);
 
         $issue->setSummary('Example Issue');
         $issue->setCode('TEST1');
@@ -77,7 +76,6 @@ class LoadIssues extends AbstractFixture
 
             $issue = new Issue();
             $issue->setOrganization($organization);
-            $issue->setOwner($user);
 
             $issue->setSummary('Example subtask #'.$n);
             $issue->setCode('TEST sub'.$n);

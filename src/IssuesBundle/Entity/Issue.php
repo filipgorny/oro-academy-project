@@ -75,14 +75,6 @@ class Issue extends ExtendIssue
     protected $updatedBy;
 
     /**
-     * @var User
-     *
-     * @ORM\ManyToOne(targetEntity="Oro\Bundle\UserBundle\Entity\User")
-     * @ORM\JoinColumn(name="owner_id", referencedColumnName="id", onDelete="SET NULL")
-     */
-    protected $owner;
-
-    /**
      * @var Organization
      *
      * @ORM\ManyToOne(targetEntity="Oro\Bundle\OrganizationBundle\Entity\Organization")
@@ -251,22 +243,6 @@ class Issue extends ExtendIssue
     public function setUpdatedBy($updatedBy)
     {
         $this->updatedBy = $updatedBy;
-    }
-
-    /**
-     * @return User
-     */
-    public function getOwner()
-    {
-        return $this->owner;
-    }
-
-    /**
-     * @param User $owner
-     */
-    public function setOwner($owner)
-    {
-        $this->owner = $owner;
     }
 
     /**
@@ -594,5 +570,18 @@ class Issue extends ExtendIssue
     public function mayHaveSubtasks()
     {
         return $this->type === self::TYPE_STORY;
+    }
+
+    /**
+     * @return User
+     */
+    public function getOwner()
+    {
+        return $this->reporter;
+    }
+
+    public function setOwner(User $owner)
+    {
+        $this->reporter = $owner;
     }
 }

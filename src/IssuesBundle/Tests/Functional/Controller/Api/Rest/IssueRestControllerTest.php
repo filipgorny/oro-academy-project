@@ -23,7 +23,7 @@ class IssueRestControllerTest extends WebTestCase
         ]);
     }
 
-    public function xtestGetListAction()
+    public function testGetListAction()
     {
         $this->client->request('GET', $this->getUrl('issues_api_get_issue_list', ['id' => 1]));
 
@@ -34,7 +34,7 @@ class IssueRestControllerTest extends WebTestCase
         $this->assertTrue(count($responseData) > 0);
     }
 
-    public function xtestGetIssueItemAction()
+    public function testGetIssueItemAction()
     {
         /** @var Issue $issue */
         $issue = $this->loadIssue();
@@ -80,24 +80,26 @@ class IssueRestControllerTest extends WebTestCase
     }
 
 
-    public function xtestUpdateAction()
+    public function testUpdateAction()
     {
         $priority = $this->loadPriority();
 
         /** @var Issue $issue */
-        $issue = $this->getIssueRepository()->findOneBy([]);
+        $issue = $this->loadIssue();
 
         $requestData = [
-            'summary' => 'Test API update issue method summary',
-            'description' => 'Test API update issue method description',
-            'priority' => $priority->getId()
+            'summary' => 'updated summary',
+            'description' => 'updated description',
+            'priority' => $priority->getId(),
+            'type' => Issue::TYPE_STORY
         ];
-        $this->client->request('PUT', '/api/rest/latest/bug-tracker/issues/' . $issue->getId(), $requestData);
+
+        $this->client->request('PUT', $this->getUrl('issues_api_put_issue', ['id' => $issue->getId()]), $requestData);
 
         $this->assertTrue($this->client->getResponse()->isSuccessful());
 
         /** @var Issue $updatedIssue */
-        $updatedIssue = $this->loadIssue([]);
+        $updatedIssue = $this->loadIssue(['id' => $issue->getId()]);
 
         $this->assertEquals($updatedIssue->getSummary(), $requestData['summary']);
         $this->assertEquals($updatedIssue->getDescription(), $requestData['description']);
@@ -105,16 +107,18 @@ class IssueRestControllerTest extends WebTestCase
         $this->assertNotNull($updatedIssue->getType());
     }
 
-    public function xtestDeleteIssue()
+    public function testDeleteIssue()
     {
-        $issue = $this->getIssueRepository()->findOneBy([]);
+        $issue = $this->loadIssue();
 
-        $this->client->request('DELETE', '/api/rest/latest/bug-tracker/issues/' . $issue->getId());
+        $this->client->request('DELETE', $this->getUrl('issues_api_delete_issue', ['id' => $issue->getId()]));
 
         $this->assertTrue($this->client->getResponse()->isSuccessful());
-        $issueAfterDelete = $issue = $this->getIssueRepository()->findOneBy(['id' => $issue->getId()]);
 
-        $this->assertNull($issueAfterDelete);
+        $deletedIssue = $this->loadIssue(['id' => $issue->getId()]);
+
+        $this->assertNotNull($deletedIssue);
+        $this->assertTrue($deletedIssue->isDeleted());
     }
 
     /**

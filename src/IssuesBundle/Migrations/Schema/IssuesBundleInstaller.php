@@ -48,7 +48,7 @@ class IssuesBundleInstaller implements Installation, NoteExtensionAwareInterface
         $table->addColumn('organization_id', 'integer', ['notnull' => false]);
         $table->addColumn('priority_id', 'integer', ['notnull' => false]);
         $table->addColumn('assignee_id', 'integer', ['notnull' => false]);
-        $table->addColumn('owner_id', 'integer', ['notnull' => false]);
+//        $table->addColumn('owner_id', 'integer', ['notnull' => false]);
         $table->addColumn('updated_by_id', 'integer', ['notnull' => false]);
         $table->addColumn('reporter_id', 'integer', ['notnull' => false]);
         $table->addColumn('created_at', 'datetime', []);
@@ -61,7 +61,7 @@ class IssuesBundleInstaller implements Installation, NoteExtensionAwareInterface
         $table->addColumn('parent_id', 'integer', ['notnull' => false]);
         $table->setPrimaryKey(['id']);
         $table->addIndex(['updated_by_id'], 'IDX_AADA29B1896DBBDE', []);
-        $table->addIndex(['owner_id'], 'IDX_AADA29B17E3C61F9', []);
+//        $table->addIndex(['owner_id'], 'IDX_AADA29B17E3C61F9', []);
         $table->addIndex(['organization_id'], 'IDX_AADA29B132C8A3DE', []);
         $table->addIndex(['priority_id'], 'IDX_AADA29B1497B19F9', []);
         $table->addIndex(['resolution_id'], 'IDX_AADA29B112A1C43A', []);

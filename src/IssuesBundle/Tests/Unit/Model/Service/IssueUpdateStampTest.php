@@ -19,7 +19,9 @@ class IssueUpdateStampTest extends \PHPUnit_Framework_TestCase
             ->method('getUser')
             ->will($this->returnValue($user));
 
-        $tokenManager = $this->getMockBuilder('Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface')
+        $tokenManager = $this->getMockBuilder(
+            'Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface'
+        )
             ->disableOriginalConstructor()
             ->getMock();
 

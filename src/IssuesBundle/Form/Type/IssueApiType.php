@@ -22,7 +22,8 @@ class IssueApiType extends IssueType
 
         $resolver->setDefaults(
             [
-                'csrf_protection' => false
+                'csrf_protection' => false,
+                'ownership_disabled' => true
             ]
         );
     }
