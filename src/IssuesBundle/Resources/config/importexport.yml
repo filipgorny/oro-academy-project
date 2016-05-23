@@ -1,0 +1,19 @@
+services:
+    # Normalizer
+    issues_bundle.importexport.normalizer.issue:
+        class: IssuesBundle\ImportExport\Serializer\Normalizer\IssueNormalizer
+        parent: oro_importexport.serializer.configurable_entity_normalizer
+        tags:
+            - { name: oro_importexport.normalizer }
+
+    # Converter
+    issues_bundle.importexport.data_converter.issue:
+        class: IssuesBundle\ImportExport\Converter\IssuesDataConverter
+
+    # Export Processor
+    issues_bundle.importexport.export_processor.issue:
+        parent: oro_importexport.processor.export_abstract
+        calls:
+             - [setDataConverter, [@issues_bundle.importexport.data_converter.issue]]
+        tags:
+            - { name: oro_importexport.processor, type: export, entity: "IssuesBundle\Entity\Issue", alias: issues }
