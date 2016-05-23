@@ -84,14 +84,13 @@ class IssueController extends Controller
     /**
      * @Route("/update/{id}", name="issues.issue_update", requirements={"id"="\d+"})
      * @Template("IssuesBundle:Issue:update.html.twig")
-
      */
     public function updateAction(Issue $issue, Request $request)
     {
         if ($issue->isDeleted()) {
             throw new NotFoundHttpException();
         }
-
+ 
         $form = $this->get('form.factory')->create('issue_type', $issue);
 
         $form->handleRequest($request);

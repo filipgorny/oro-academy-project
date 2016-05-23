@@ -76,7 +76,7 @@ services:
         factory_method: createNamed
         factory_service: form.factory
         arguments:
-            - 'issue_api_type'
+            - ~
             - 'issue_api_type'
 
     issues.form.handler.issue:
@@ -86,3 +86,4 @@ services:
           - "@issues.form.issue_api"
           - "@request"
           - "@doctrine.orm.entity_manager"
+          - "@security.token_storage"

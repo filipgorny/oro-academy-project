@@ -18,5 +18,6 @@ class ExtendIssue implements ActivityInterface
      */
     public function __construct()
     {
+        
     }
 }
