@@ -3,6 +3,7 @@
 namespace IssuesBundle\Test\Functional;
 
 use Oro\Bundle\TestFrameworkBundle\Test\WebTestCase;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 /**
  * @outputBuffering enabled
@@ -49,6 +50,31 @@ class ExportTest extends WebTestCase
         $this->assertResponseStatusCodeEquals($result, 200);
         $this->assertResponseContentTypeEquals($result, 'text/csv');
 
-        $content = $this->client->getResponse()->getContent();
+        $this->assertInstanceOf('Symfony\Component\HttpFoundation\BinaryFileResponse', $result);
+
+        $issues = $this->getContainer()->get('doctrine.orm.entity_manager')->getRepository('IssuesBundle:Issue')
+            ->createQueryBuilder('i')
+            ->getQuery()
+            ->getResult();
+
+        if ($result instanceof BinaryFileResponse) {
+            $fullFileName = $result->getFile()->getPath() . DIRECTORY_SEPARATOR . $result->getFile()->getFilename();
+
+            $csv = array_map('str_getcsv', file($fullFileName));
+
+            $found = 0;
+
+            foreach ($issues as $issue) {
+                foreach ($csv as $line) {
+                    if ($line['0'] == $issue->getCode()) {
+                        $found++;
+                    }
+                }
+            }
+
+            $this->assertEquals($found, count($issues));
+        } else {
+            $this->fail('Failed obtaining export file.');
+        }
     }
 }

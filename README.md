@@ -4,11 +4,10 @@ Oro Platform Empty Application
 ## Installation
 
 ```
-php app/console doctrine:schema:update --force
+php app/console oro:install
 ``
 
-
 ## TODO
-* add existing entities into the installation script
+There are number of improvements that may be added to the project. They are listed under the IMPROVEMENTS page:
 
-
+[Improvement](IMPROVEMENTS.md)
