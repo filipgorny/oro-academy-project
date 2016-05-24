@@ -2,14 +2,7 @@
 
 namespace IssuesBundle\ImportExport\Serializer\Normalizer;
 
-use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\SerializerInterface;
-
 use Oro\Bundle\ImportExportBundle\Serializer\Normalizer\ConfigurableEntityNormalizer;
-use OroCRM\Bundle\ContactBundle\Entity\Contact;
-use OroCRM\Bundle\ContactBundle\Formatter\SocialUrlFormatter;
-use OroCRM\Bundle\ContactBundle\Model\Social;
 
 class IssueNormalizer extends ConfigurableEntityNormalizer
 {
@@ -22,6 +15,10 @@ class IssueNormalizer extends ConfigurableEntityNormalizer
     {
         $result = parent::normalize($object, $format, $context);
 
+        if (isset($result['deleted'])) {
+            $result['deleted'] = $result['deleted'] ? 'yes' : 'no';
+        }
+
         return $result;
     }
 
@@ -30,7 +27,9 @@ class IssueNormalizer extends ConfigurableEntityNormalizer
      */
     public function denormalize($data, $class, $format = null, array $context = array())
     {
-        return parent::denormalize($data, $class, $format, $context);
+        $result = parent::denormalize($data, $class, $format, $context);
+
+        return $result;
     }
 
     /**

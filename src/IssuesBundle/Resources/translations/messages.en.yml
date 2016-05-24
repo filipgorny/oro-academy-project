@@ -40,6 +40,12 @@ issues:
             label: Parent issue
         status:
             label: Status
+        deleted:
+            label: Deleted
+        update_at:
+            label: Updated at
+        created_at:
+            label: Created at
         flashMessages:
             create:
                 success: Issue created succesfuly

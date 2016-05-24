@@ -63,6 +63,14 @@ class Issue extends ExtendIssue
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     *
+     * @ConfigField(
+     *      defaultValues={
+     *          "importexport"={
+     *              "excluded"=true
+     *          }
+     *      }
+     * )
      */
     protected $id;
 
@@ -71,6 +79,14 @@ class Issue extends ExtendIssue
      *
      * @ORM\ManyToOne(targetEntity="Oro\Bundle\UserBundle\Entity\User")
      * @ORM\JoinColumn(name="updated_by_id", referencedColumnName="id", onDelete="SET NULL")
+     *
+     * @ConfigField(
+     *      defaultValues={
+     *          "importexport"={
+     *              "excluded"=true
+     *          }
+     *      }
+     * )
      */
     protected $updatedBy;
 
@@ -79,6 +95,14 @@ class Issue extends ExtendIssue
      *
      * @ORM\ManyToOne(targetEntity="Oro\Bundle\OrganizationBundle\Entity\Organization")
      * @ORM\JoinColumn(name="organization_id", referencedColumnName="id", onDelete="SET NULL")
+     *
+     * @ConfigField(
+     *      defaultValues={
+     *          "importexport"={
+     *              "excluded"=true
+     *          }
+     *      }
+     * )
      */
     protected $organization;
 
@@ -90,6 +114,9 @@ class Issue extends ExtendIssue
      *      defaultValues={
      *          "entity"={
      *              "label"="oro.ui.created_at"
+     *          },
+     *          "importexport"={
+     *              "excluded"=true
      *          }
      *      }
      * )
@@ -104,6 +131,9 @@ class Issue extends ExtendIssue
      *      defaultValues={
      *          "entity"={
      *              "label"="oro.ui.updated_at"
+     *          },
+     *          "importexport"={
+     *              "excluded"=true
      *          }
      *      }
      * )
@@ -116,6 +146,14 @@ class Issue extends ExtendIssue
      * @ORM\Column(type="string")
      * @Assert\Length(min=5, max=255)
      * @Assert\NotBlank
+     *
+     * @ConfigField(
+     *      defaultValues={
+     *          "importexport"={
+     *              "order"=20
+     *          }
+     *      }
+     * )
      */
     protected $summary;
 
@@ -123,6 +161,14 @@ class Issue extends ExtendIssue
      * @var string
      *
      * @ORM\Column(type="string")
+     *
+     * @ConfigField(
+     *      defaultValues={
+     *          "importexport"={
+     *              "order"=10
+     *          }
+     *      }
+     * )
      */
     protected $code;
 
@@ -132,6 +178,14 @@ class Issue extends ExtendIssue
      * @ORM\Column(type="string")
      * @Assert\Length(min=5, max=255)
      * @Assert\NotBlank
+     *
+     * @ConfigField(
+     *      defaultValues={
+     *          "importexport"={
+     *              "order"=30
+     *          }
+     *      }
+     * )
      */
     protected $description;
 
@@ -204,13 +258,37 @@ class Issue extends ExtendIssue
      *      joinColumns={@ORM\JoinColumn(name="issue_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")}
      *      )
+     *
+     * @ConfigField(
+     *      defaultValues={
+     *          "importexport"={
+     *              "excluded"=true
+     *          }
+     *      }
+     * )
      */
     private $collaborators;
 
+//* @ConfigField(
+//*      defaultValues={
+//*          "importexport"={
+//*              "excluded"=true
+//*          }
+//*
+// this annotation has no effect on the delete field
     /**
      * @var bool
      *
      * @ORM\Column(type="smallint")
+     *
+     * @ConfigField(
+     *      defaultValues={
+     *          "importexport"={
+     *              "excluded"=true
+     *          }
+     *      }
+     * )
+     *
      */
     private $deleted = false;
 
