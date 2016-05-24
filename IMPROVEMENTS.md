@@ -1,0 +1,1 @@
+- Filter exported entities (csv export) to only non deleted (issue.deleted = false)
