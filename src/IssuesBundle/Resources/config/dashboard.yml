@@ -1,7 +1,10 @@
 oro_dashboard_config:
     widgets:
-        issues_by_status_chart:                               # register a widget
+        issues_by_status_chart:
             label:      issues.dashboard.issues_by_status_chart.title
-            route:      issues.issues_by_status_chart        # you can use existing controller to render your TWIG template
-            #route_parameters: { bundle: OroCRMCallBundle, name: recentCalls }   # just specify a bundle and a TWIG template name
-            #acl:        orocrm_call_view
+            route:      issues.issues_by_status_chart
+
+        issues_recent_grid:
+            label:      issues.dashboard.issues_recent_grid.title
+            route:      oro_dashboard_widget
+            route_parameters: { bundle: IssuesBundle, name: lastIssuesGrid }

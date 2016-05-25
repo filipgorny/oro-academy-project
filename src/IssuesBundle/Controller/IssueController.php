@@ -29,6 +29,17 @@ class IssueController extends Controller
     }
 
     /**
+     * @Route("/collaborated-recently", name="issues.issues_collaborated_recently")
+     * @Template
+     */
+    public function collaboratedRecentlyAction()
+    {
+        return [
+            'entity_class' => 'IssueBundle\Entity\Issue'
+        ];
+    }
+
+    /**
      * @Route("/view/{id}", name="issues.issue_view", requirements={"id"="\d+"})
      * @AclAncestor("issues.issue_view")
      * @Template

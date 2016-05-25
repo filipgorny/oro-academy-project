@@ -160,3 +160,42 @@ datagrid:
                 updatedAt:
                     type: datetime
                     data_name: issue.updatedAt
+
+
+    dashboard-recent-issues-grid:
+        options:
+            entityHint: issue
+        source:
+            type: orm
+            query:
+                select:
+                    - issue.id
+                    - issue.code
+                    - issue.summary
+                from:
+                    - { table: IssuesBundle\Entity\Issue, alias: issue }
+                join:
+                    left:
+                        - { join: issue.collaborators, alias: collaborator }
+                where:
+                    and:
+                      - collaborator.id = @oro_security.security_facade->getLoggedUserId
+        columns:
+            code:
+                label: issues.issue.code.label
+            summary:
+                label: issues.issue.summary.label
+        sorters:
+            columns:
+                code:
+                    data_name: issue.code
+                summary:
+                    data_name: issue.summary
+            default:
+                id: DESC
+        options:
+            toolbarOptions:
+                hide: true
+                pageSize:
+                    items: [10]
+                    default_per_page: 10

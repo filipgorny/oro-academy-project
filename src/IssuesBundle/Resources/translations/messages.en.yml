@@ -55,6 +55,11 @@ issues:
             delete:
                 success: Issue deleted succesfuly
     add_subtask: Add subtask
+    collaborated_recently:
+        label: Colalborated recently
+        view_all: View all
     dashboard:
         issues_by_status_chart:
             title: Issues by status
+        issues_recent_grid:
+            title: Recently collaborated issues

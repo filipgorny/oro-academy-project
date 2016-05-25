@@ -1,0 +1,16 @@
+{% extends 'OroDashboardBundle:Dashboard:widget.html.twig' %}
+{% import 'OroDataGridBundle::macros.html.twig' as dataGrid %}
+
+{% block content %}
+    {{ dataGrid.renderGrid('dashboard-recent-issues-grid') }}
+{% endblock %}
+
+{% block actions %}
+    {% set actions = [{
+    'url': path('issues.issues_collaborated_recently'),
+    'type': 'link',
+    'label': 'issues.collaborated_recently.view_all'|trans
+    }] %}
+
+    {{ parent() }}
+{% endblock %}
