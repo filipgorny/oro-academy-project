@@ -55,3 +55,6 @@ issues:
             delete:
                 success: Issue deleted succesfuly
     add_subtask: Add subtask
+    dashboard:
+        issues_by_status_chart:
+            title: Issues by status
