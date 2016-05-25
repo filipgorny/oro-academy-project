@@ -46,11 +46,6 @@ workflows:
                 label: 'Start progress'
                 step_to: in_progress
                 transition_definition: start_progress_definition
-                form_options:
-                    attribute_fields:
-                        resolution:
-                            options:
-                                required: true
             resolve:
                 label: 'Resolve'
                 step_to: resolved
@@ -59,6 +54,11 @@ workflows:
                 label: 'Close'
                 step_to: closed
                 transition_definition: close_definition
+                form_options:
+                    attribute_fields:
+                        resolution:
+                            options:
+                                required: true
             reopen:
                 label: 'Reopen'
                 step_to: reopened
@@ -77,13 +77,13 @@ workflows:
             close_definition:
                 post_actions:
                     - @remember_collaborant: []
+                    - @set_resolution:
+                        attribute: $resolution
+                        data:
+                            name: $resolution
             reopen_definition:
                 post_actions:
                     - @remember_collaborant: []
             stop_progress_definition:
                 post_actions:
                     - @remember_collaborant: []
-                    - @set_resolution:
-                        attribute: $resolution
-                        data:
-                            name: $resolution

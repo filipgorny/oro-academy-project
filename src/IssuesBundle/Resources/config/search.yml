@@ -1,0 +1,87 @@
+IssuesBundle\Entity\Issue:
+# summary, code, type, priority, status, resolution, reporter, assignee
+    alias: issues
+    label: Issues
+    route:
+        name: issues.issue_view
+        parameters:
+            id: id
+    title_fields: [code, summary]
+    search_template: IssuesBundle:Issue:searchResult.html.twig
+    fields:
+        -
+            name: summary
+            target_type: text
+        -
+            name: description
+            target_type: text
+        -
+            name: categories
+            relation_type: many-to-many
+            relation_fields:
+        -
+            name: priority
+            relation_type: many-to-one                       # Indicate that this field is relation field to another table.
+                                                             # Supported: one-to-one, many-to-many, one-to-many, many-to-one.
+            relation_fields:                                 # Array of fields from relation record we must to index.
+                -
+                    name: name                               # related entity field name to index
+                    target_type: text                        # related entity field name type
+                    target_fields: [priorityName]  # target fields to store field index
+        -
+            name: workflowStep
+            relation_type: many-to-one
+            relation_fields:
+                -
+                    name:  name
+                    target_type: text
+                    target_fields: [statusName]
+                -
+                    name: label
+                    target_type: text
+                    target_fields: [statusLabel]
+        -
+            name: categories
+            relation_type: many-to-many
+            relation_fields:
+                -
+                    name: name
+                    target_type: text
+                    target_fields: [all_data]
+        -
+            name: resolution
+            relation_type: many-to-one
+
+            relation_fields:
+                -
+                    name: name
+                    target_type: text
+                    target_fields: [resolutionName]
+        -
+            name: reporter
+            relation_type: many-to-one
+            relation_fields:
+                -
+                    name: username
+                    target_type: text
+                    target_fields: [username]
+                -
+                    name: firstName
+                    target_type: text
+                    target_fields: [firstName]
+                -
+                    name: lastName
+                    target_type: text
+                    target_fields: [lastName]
+        -
+            name: assignee
+            relation_type: many-to-one
+            relation_fields:
+                -
+                    name: firstName
+                    target_type: text
+                    target_fields: [firstName]
+                -
+                    name: lastName
+                    target_type: text
+                    target_fields: [lastName]

@@ -2,6 +2,7 @@ issues:
     issue:
         entity_label: Issue
         entity_plural_label: Issues
+        entity_label_plural: Issues
         id:
             label: Id
         assignee:
