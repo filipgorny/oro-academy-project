@@ -1,0 +1,7 @@
+{% import 'OroDataGridBundle::macros.html.twig' as dataGrid %}
+
+<div class="responsive-cell">
+    <h5>{{ 'issues.user_view.issues_assigned_and_reported.title'|trans }}</h5>
+</div>
+
+{{ dataGrid.renderGrid('user-view-page-issues-grid') }}

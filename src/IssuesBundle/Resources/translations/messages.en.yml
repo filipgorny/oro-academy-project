@@ -63,3 +63,6 @@ issues:
             title: Issues by status
         issues_recent_grid:
             title: Recently collaborated issues
+    user_view:
+        issues_assigned_and_reported:
+            title: Assigned and reported issues
