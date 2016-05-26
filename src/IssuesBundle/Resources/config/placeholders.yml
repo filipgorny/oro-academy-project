@@ -2,6 +2,9 @@ placeholders:
     view_content_data_additional_information:
         items:
             issues_user_view_issues_grid: ~
+    view_navButtons_after:
+        items:
+            issues_user_view_add_issue_button: ~
 
 items:
     oro_send_email_button:
@@ -12,4 +15,7 @@ items:
         acl: oro_email_email_create
     issues_user_view_issues_grid:
         template: IssuesBundle:User:userViewPageIssuesGrid.html.twig
+        applicable: @oro_ui.placeholder.filter->isInstanceOf($entity$, %oro_user.entity.class%)
+    issues_user_view_add_issue_button:
+        template: IssuesBundle:User:userViewAddIssueButton.html.twig
         applicable: @oro_ui.placeholder.filter->isInstanceOf($entity$, %oro_user.entity.class%)

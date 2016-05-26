@@ -66,3 +66,7 @@ issues:
     user_view:
         issues_assigned_and_reported:
             title: Assigned and reported issues
+    add_dialog:
+        title: Add issue
+        label: Use this dialog to add an issue for viewed user
+        button_label: Add issue

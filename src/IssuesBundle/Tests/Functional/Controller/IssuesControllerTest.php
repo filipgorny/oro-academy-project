@@ -147,4 +147,30 @@ class IssuesControllersTest extends WebTestCase
 
         $this->assertTrue($tokenExtract->count() > 0);
     }
+
+    public function testAddingDialog()
+    {
+        $crawler = $this->client->request(
+            'GET',
+            $this->getUrl(
+                'issues.issue_add_dialog',
+                ['id' => $this->getUser()->getId()]
+            ),
+            [],
+            [],
+            $this->generateBasicAuthHeader(
+                LoadUserData::USER_FIRST_USERNAME,
+                LoadUserData::PASSWORD
+            )
+        );
+
+        $result = $this->client->getResponse();
+
+        $this->assertHtmlResponseStatusCodeEquals($result, 200);
+
+        $tokenExtract = $crawler
+            ->filter('form');
+
+        $this->assertTrue($tokenExtract->count() > 0);
+    }
 }

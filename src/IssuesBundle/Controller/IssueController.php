@@ -6,11 +6,13 @@ use IssuesBundle\Entity\Issue;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Oro\Bundle\SecurityBundle\Annotation\AclAncestor;
 use Oro\Bundle\SecurityBundle\Annotation\Acl;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Oro\Bundle\UserBundle\Entity\User;
 
 /**
  * @Route("/issue")
@@ -157,7 +159,7 @@ class IssueController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $issue->setDeleted(true);
+        $issue->setDeleted(true); // TODO - change to a service
 
         $em->persist($issue);
         $em->flush();
@@ -174,5 +176,55 @@ class IssueController extends Controller
         }
 
         return $this->redirectToRoute('issues.issues_index');
+    }
+
+    /**
+     * @Route("/add-issue-dialog/{id}", name="issues.issue_add_dialog",
+     *     requirements={"id"="\d+"})
+     * @Template
+     */
+    public function addIssueForUserDialogAction(User $assignee, Request $request)
+    {
+        $currentUser = $this->get('security.context')->getToken()->getUser();
+
+        $issue = new Issue();
+        $issue->setAssignee($assignee);
+        $issue->setOwner($currentUser);
+
+        /**
+         * @var Form $form
+         */
+        $form = $this->get('form.factory')->create('issue_type', $issue);
+
+        $saved = false;
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                /**
+                 * @var $issue Issue
+                 */
+                $issue = $form->getData();
+
+
+
+                $issue->setReporter($currentUser);
+
+                $em = $this->getDoctrine()->getManager();
+
+                $em->persist($issue);
+                $em->flush();
+
+                if ($issue->getId()) {
+                    $saved = true;
+                }
+            }
+        }
+
+        return [
+            'form' => $form->createView(),
+            'saved' => $saved
+        ];
     }
 }

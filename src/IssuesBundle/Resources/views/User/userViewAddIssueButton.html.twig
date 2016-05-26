@@ -1,0 +1,24 @@
+{% import 'OroUIBundle::macros.html.twig' as UI %}
+
+{{ UI.clientButton({
+    'dataUrl': path('issues.issue_add_dialog', { 'id': entity.id }),
+    'aCss': 'no-hash',
+    'iCss': 'icon-plus-sign',
+    'dataId': entity.id,
+    'title' : 'issues.add_dialog.title'|trans,
+    'label' : 'issues.add_dialog.button_label'|trans,
+    'widget' : {
+        'type' : 'dialog',
+        'multiple' : false,
+        'reload-grid-name' : 'user-view-page-issues-grid',
+        'options' : {
+            'stateEnabled': false,
+            'dialogOptions' : {
+                'title' : 'issues.add_dialog.title'|trans,
+                'allowMaximize': false,
+                'allowMinimize': false,
+                'width': 600
+            }
+        }
+    }
+}) }}

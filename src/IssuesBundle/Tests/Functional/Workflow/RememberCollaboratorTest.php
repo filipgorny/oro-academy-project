@@ -17,16 +17,17 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
  */
 class RememberCollaboratorTest extends WebTestCase
 {
-    public function testIfRunningWorkflowMarksTheUserAsCollaborantInTheIssue()
+    protected function setUp()
     {
-        $this->initClient();
+        $this->initClient([], $this->generateBasicAuthHeader());
 
         $this->loadFixtures([
             'IssuesBundle\\Tests\\Functional\\DataFixtures\\LoadIssuesData',
-            'IssuesBundle\\Tests\\Functional\\DataFixtures\\LoadUserData',
-            'IssuesBundle\\Tests\\Functional\\DataFixtures\\LoadWorkflowDefinitions',
         ]);
+    }
 
+    public function testIfRunningWorkflowMarksTheUserAsCollaborantInTheIssue()
+    {
         $this->logIn($this->getReference(LoadUserData::USER_SECOND_USERNAME));
 
         $issue = $this->getIssue();
@@ -51,7 +52,8 @@ class RememberCollaboratorTest extends WebTestCase
         $this->assertTrue(
             $issue->getCollaborators()->contains($this->getReference(LoadUserData::USER_SECOND_USERNAME))
         );
-        $this->assertEquals(1, $issue->getCollaborators()->count());
+
+        $this->assertEquals(2, $issue->getCollaborators()->count());
     }
 
     /**
