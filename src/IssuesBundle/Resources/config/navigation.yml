@@ -1,0 +1,30 @@
+oro_menu_config:
+    items:
+        issues_report:
+            label: Issues
+            route: issues.issues_index
+            routeParameters:
+                reportGroupName: issues
+                reportName:      all_issues
+        issues_tab:
+            label: Issues
+            uri:   '#'
+            extras:
+                position: 300
+        issues_list:
+            label: List issues
+            route: issues.issues_index
+        issues_add:
+            label: Add new
+            route: issues.issue_create
+
+    tree:
+        application_menu:
+            children:
+                reports_tab:
+                    children:
+                        issues_report: ~
+                issues_tab:
+                    children:
+                        issues_list: ~
+                        issues_add: ~
