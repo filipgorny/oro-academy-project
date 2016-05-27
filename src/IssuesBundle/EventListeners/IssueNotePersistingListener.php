@@ -9,6 +9,10 @@ use IssuesBundle\Model\Service\IssueUpdateStamp;
 use Oro\Bundle\NoteBundle\Entity\Note;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
+/**
+ * Class IssueNotePersistingListener
+ * @package IssuesBundle\EventListeners
+ */
 class IssueNotePersistingListener
 {
     /**
@@ -26,6 +30,12 @@ class IssueNotePersistingListener
      */
     private $tokenStorage;
 
+    /**
+     * IssueNotePersistingListener constructor.
+     * @param IssueUpdateStamp $issueUpdateStamp
+     * @param Collaboration $collaboration
+     * @param TokenStorageInterface $tokenStorage
+     */
     public function __construct(
         IssueUpdateStamp $issueUpdateStamp,
         Collaboration $collaboration,
@@ -36,6 +46,9 @@ class IssueNotePersistingListener
         $this->tokenStorage = $tokenStorage;
     }
 
+    /**
+     * @param LifecycleEventArgs $args
+     */
     public function prePersist(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
@@ -53,6 +66,9 @@ class IssueNotePersistingListener
         }
     }
 
+    /**
+     * @param LifecycleEventArgs $args
+     */
     public function preUpdate(LifecycleEventArgs $args)
     {
         return $this->prePersist($args);

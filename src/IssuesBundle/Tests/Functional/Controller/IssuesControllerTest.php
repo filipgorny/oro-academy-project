@@ -38,13 +38,15 @@ class IssuesControllersTest extends WebTestCase
             'GET',
             $this->getUrl('issues.issue_view', array('id' => $issue->getId()))
         );
+        
+        $issueTypeDefinition = $this->client->getContainer()->get('issues.model.issue_types_definition');
 
         $result = $this->client->getResponse();
 
         $this->assertHtmlResponseStatusCodeEquals($result, 200);
 
         $this->assertContains($issue->getLabel(), $result->getContent());
-        $this->assertContains($issue->getTypeName(), $result->getContent());
+        $this->assertContains($issueTypeDefinition->translateType($issue->getType()), $result->getContent());
         $this->assertContains(
             $issue->getPriority()->getName(),
             $result->getContent()

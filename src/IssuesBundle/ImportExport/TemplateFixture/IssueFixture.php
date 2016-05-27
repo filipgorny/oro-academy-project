@@ -3,9 +3,14 @@
 namespace IssuesBundle\ImportExport\TemplateFixture;
 
 use IssuesBundle\Entity\Issue;
+use IssuesBundle\Model\Service\IssueTypesDefinition;
 use Oro\Bundle\ImportExportBundle\TemplateFixture\AbstractTemplateRepository;
 use Oro\Bundle\ImportExportBundle\TemplateFixture\TemplateFixtureInterface;
 
+/**
+ * Class IssueFixture
+ * @package IssuesBundle\ImportExport\TemplateFixture
+ */
 class IssueFixture extends AbstractTemplateRepository implements TemplateFixtureInterface
 {
     /**
@@ -52,7 +57,7 @@ class IssueFixture extends AbstractTemplateRepository implements TemplateFixture
                 $entity->setCreatedAt(new \DateTime());
                 $entity->setAssignee($userRepo->getEntity('John Doo'));
                 $entity->setReporter($userRepo->getEntity('John Doo'));
-                $entity->setType(Issue::TYPE_BUG);
+                $entity->setType(IssueTypesDefinition::TYPE_BUG);
                 $entity->setOrganization($organizationRepo->getEntity('default'));
 
                 return;

@@ -3,13 +3,18 @@
 namespace IssuesBundle\Migrations\Data\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
-use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use IssuesBundle\Entity\Priority;
 use IssuesBundle\Entity\Resolution;
 
+/**
+ * Class LoadResolutions
+ * @package IssuesBundle\Migrations\Data\ORM
+ */
 class LoadResolutions extends AbstractFixture
 {
+    /**
+     * @param ObjectManager $manager
+     */
     public function load(ObjectManager $manager)
     {
         $resolutions = [

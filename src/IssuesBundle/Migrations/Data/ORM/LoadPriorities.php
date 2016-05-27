@@ -6,8 +6,15 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use IssuesBundle\Entity\Priority;
 
+/**
+ * Class LoadPriorities
+ * @package IssuesBundle\Migrations\Data\ORM
+ */
 class LoadPriorities extends AbstractFixture
 {
+    /**
+     * @param ObjectManager $manager
+     */
     public function load(ObjectManager $manager)
     {
         $priorites = [
@@ -29,9 +36,11 @@ class LoadPriorities extends AbstractFixture
                 $this->setReference('priority_' . $level, $priority);
 
                 $manager->persist($priority);
-            } else {
-                $this->setReference('priority_' . $level, $existing);
+
+                continue;
             }
+
+            $this->setReference('priority_' . $level, $existing);
         }
 
         $manager->flush();

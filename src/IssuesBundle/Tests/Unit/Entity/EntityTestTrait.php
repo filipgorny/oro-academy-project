@@ -26,9 +26,11 @@ trait EntityTestTrait
 
                 if (method_exists($entity, 'is'.$propertyName)) {
                     $this->assertEquals($entity->{'is' . $propertyName}(), (bool)$value, $propertyName);
-                } else {
-                    $this->assertEquals($entity->{'get' . $propertyName}(), $value, $propertyName);
+
+                    continue;
                 }
+
+                $this->assertEquals($entity->{'get' . $propertyName}(), $value, $propertyName);
             }
         }
     }

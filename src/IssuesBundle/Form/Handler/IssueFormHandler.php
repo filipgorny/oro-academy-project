@@ -75,16 +75,22 @@ class IssueFormHandler
         return false;
     }
 
+    /**
+     * @param \Symfony\Component\Form\Form $form
+     * @return array
+     */
     private function getErrorMessages(\Symfony\Component\Form\Form $form)
     {
         $errors = array();
 
-        foreach ($form->getErrors() as $key => $error) {
+        foreach ($form->getErrors() as $error) {
             if ($form->isRoot()) {
                 $errors['#'][] = $error->getMessage();
-            } else {
-                $errors[] = $error->getMessage();
+
+                continue;
             }
+
+            $errors[] = $error->getMessage();
         }
 
         foreach ($form->all() as $child) {

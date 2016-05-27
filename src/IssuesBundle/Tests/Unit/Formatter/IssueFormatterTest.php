@@ -2,8 +2,8 @@
 
 namespace IssuesBundle\Tests\Unit\Formatter;
 
-use IssuesBundle\Entity\Issue;
 use IssuesBundle\Formatter\IssueFormatter;
+use IssuesBundle\Model\Service\IssueTypesDefinition;
 
 class IssueFormatterTest extends \PHPUnit_Framework_TestCase
 {
@@ -14,21 +14,13 @@ class IssueFormatterTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->formatter = new IssueFormatter();
+        $issueTypeDefinition = new IssueTypesDefinition();
+
+        $this->formatter = new IssueFormatter($issueTypeDefinition);
     }
 
     public function testReturnsValidTypeCallback()
     {
         $this->assertInstanceOf('\Closure', $this->formatter->getTypeCallback());
-    }
-
-    public function testReturnsDictionary()
-    {
-        $this->assertTrue(count($this->formatter->getTypesDictionary()) > 0);
-    }
-
-    public function testTranslatesType()
-    {
-        $this->assertEquals('bug', $this->formatter->translateType(Issue::TYPE_BUG));
     }
 }

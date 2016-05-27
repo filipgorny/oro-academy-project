@@ -73,8 +73,10 @@ class ExportTest extends WebTestCase
             }
 
             $this->assertEquals($found, count($issues));
-        } else {
-            $this->fail('Failed obtaining export file.');
+
+            return;
         }
+
+        $this->fail('Failed obtaining export file.');
     }
 }

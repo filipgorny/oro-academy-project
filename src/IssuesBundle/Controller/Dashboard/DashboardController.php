@@ -9,6 +9,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Class DashboardController
+ * @package IssuesBundle\Controller\Dashboard
+ */
 class DashboardController extends Controller
 {
 

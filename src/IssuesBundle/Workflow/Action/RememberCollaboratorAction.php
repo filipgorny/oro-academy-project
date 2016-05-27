@@ -2,14 +2,15 @@
 
 namespace IssuesBundle\Workflow\Action;
 
-use Doctrine\ORM\EntityManager;
 use IssuesBundle\Model\Service\Collaboration;
-use Oro\Bundle\WorkflowBundle\Exception\InvalidParameterException;
 use Oro\Bundle\WorkflowBundle\Model\Action\ActionInterface;
 use Oro\Component\ConfigExpression\ExpressionInterface;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
+/**
+ * Class RememberCollaboratorAction
+ * @package IssuesBundle\Workflow\Action
+ */
 class RememberCollaboratorAction implements ActionInterface
 {
     /**
@@ -50,10 +51,18 @@ class RememberCollaboratorAction implements ActionInterface
         }
     }
 
+    /**
+     * @param array $options
+     * @return null
+     */
     public function initialize(array $options)
     {
     }
 
+    /**
+     * @param ExpressionInterface $condition
+     * @return null
+     */
     public function setCondition(ExpressionInterface $condition)
     {
     }

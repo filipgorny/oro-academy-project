@@ -10,7 +10,6 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Oro\Bundle\SoapBundle\Controller\Api\Rest\RestController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Oro\Bundle\SecurityBundle\Annotation\Acl;
 
 /**
  * @RouteResource("issue")
@@ -57,11 +56,7 @@ class IssueRestController extends RestController
     {
         $isProcessed = $this->get('issues.model.issue_deletion')->deleteIssueById($id);
 
-        if (!$isProcessed) {
-            $view = $this->view(null, Codes::HTTP_NOT_FOUND);
-        } else {
-            $view = $this->view(null, Codes::HTTP_NO_CONTENT);
-        }
+        $view = $isProcessed ? $this->view(null, Codes::HTTP_NO_CONTENT) : $this->view(null, Codes::HTTP_NOT_FOUND);
 
         return $this->buildResponse($view, self::ACTION_DELETE, ['id' => $id, 'success' => $isProcessed]);
     }

@@ -5,6 +5,7 @@ namespace IssuesBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use IssuesBundle\Model\ExtendIssue;
+use IssuesBundle\Model\Service\IssueTypesDefinition;
 use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\Config;
 use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\ConfigField;
 use Oro\Bundle\OrganizationBundle\Entity\Organization;
@@ -12,6 +13,8 @@ use Oro\Bundle\UserBundle\Entity\User;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
+ * @SuppressWarnings(PHPMD.TooManyFields)
+ *
  * @ORM\Entity
  * @ORM\Table(name="oro_issues")
  * @Config(
@@ -53,10 +56,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class Issue extends ExtendIssue
 {
-    const TYPE_BUG = 1;
-    const TYPE_SUBTASK = 2;
-    const TYPE_STORY = 3;
-
     /**
      * @var integer
      *
@@ -269,13 +268,6 @@ class Issue extends ExtendIssue
      */
     private $collaborators;
 
-//* @ConfigField(
-//*      defaultValues={
-//*          "importexport"={
-//*              "excluded"=true
-//*          }
-//*
-// this annotation has no effect on the delete field
     /**
      * @var bool
      *
@@ -292,6 +284,9 @@ class Issue extends ExtendIssue
      */
     private $deleted = false;
 
+    /**
+     * Issue constructor.
+     */
     public function __construct()
     {
         $this->children = new ArrayCollection();
@@ -554,18 +549,6 @@ class Issue extends ExtendIssue
     }
 
     /**
-     * @return string
-     */
-    public function getTypeName()
-    {
-        $dictionary = self::getTypesDictionary();
-
-        if (isset($dictionary[$this->type])) {
-            return $dictionary[$this->type];
-        }
-    }
-
-    /**
      * Returns a label for using in links, titles etc.
      */
     public function getLabel()
@@ -589,6 +572,9 @@ class Issue extends ExtendIssue
         $this->parent = $parent;
     }
 
+    /**
+     * @param Issue $childIssue
+     */
     public function addChild(Issue $childIssue)
     {
         $childIssue->setParent($this);
@@ -596,34 +582,9 @@ class Issue extends ExtendIssue
         $this->children->add($childIssue);
     }
 
-    public static function getTypesDictionary()
-    {
-        return [
-            self::TYPE_BUG => 'bug',
-            self::TYPE_STORY => 'story',
-            self::TYPE_SUBTASK => 'subtask',
-        ];
-    }
-
-    public static function getTypesDictionaryChoicesForNewEntries()
-    {
-        return [
-            self::TYPE_BUG => 'bug',
-            self::TYPE_STORY => 'story',
-        ];
-    }
-
     /**
-     * @param $type
-     * @return string|null
+     * @return string
      */
-    public static function translateType($type)
-    {
-        if (in_array($type, self::getTypesDictionary())) {
-            return self::getTypesDictionary()[$type];
-        }
-    }
-
     public function __toString()
     {
         return $this->getLabel();
@@ -645,9 +606,12 @@ class Issue extends ExtendIssue
         $this->deleted = (bool)$deleted;
     }
 
+    /**
+     * @return bool
+     */
     public function mayHaveSubtasks()
     {
-        return $this->type === self::TYPE_STORY;
+        return $this->type === IssueTypesDefinition::TYPE_STORY;
     }
 
     /**
@@ -658,6 +622,9 @@ class Issue extends ExtendIssue
         return $this->reporter;
     }
 
+    /**
+     * @param User $owner
+     */
     public function setOwner(User $owner)
     {
         $this->reporter = $owner;

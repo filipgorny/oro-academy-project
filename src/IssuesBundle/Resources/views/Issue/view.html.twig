@@ -56,7 +56,7 @@
 
                     {{ UI.renderProperty('issues.issue.code.label'|trans, entity.code) }}
                     {{ UI.renderProperty('issues.issue.summary.label'|trans, entity.summary) }}
-                    {{ UI.renderProperty('issues.issue.type.label'|trans, entity.typeName) }}
+                    {{ UI.renderProperty('issues.issue.type.label'|trans, entity.type|issue_type_name) }}
                     {{ UI.renderProperty('issues.issue.createdAt.label'|trans, entity.createdAt|oro_format_datetime) }}
                     {{ UI.renderProperty('issues.issue.updatedAt.label'|trans, entity.updatedAt|oro_format_datetime) }}
                     {{ UI.renderProperty('issues.issue.priority.label'|trans, entity.priority.name) }}

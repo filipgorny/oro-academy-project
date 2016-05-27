@@ -4,6 +4,7 @@ namespace IssuesBundle\Form\Type;
 
 use Doctrine\ORM\EntityRepository;
 use IssuesBundle\Entity\Issue;
+use IssuesBundle\Model\Service\IssueTypesDefinition;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -11,13 +12,33 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotNull;
 
+/**
+ * Class IssueType
+ * @package IssuesBundle\Form\Type
+ */
 class IssueType extends AbstractType
 {
+    /**
+     * @var IssueTypesDefinition
+     */
+    private $issueTypesDefinition;
+
+    /**
+     * IssueType constructor.
+     * @param IssueTypesDefinition $issueTypesDefinition
+     */
+    public function __construct(IssueTypesDefinition $issueTypesDefinition)
+    {
+        $this->issueTypesDefinition = $issueTypesDefinition;
+    }
+
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $entity = $builder->getData();
+
         $builder
             ->add(
                 'parent',
@@ -32,7 +53,7 @@ class IssueType extends AbstractType
                             ->andWhere('i.deleted = :deleted')
                             ->orderBy('i.summary', 'ASC')
                             ->setParameters([
-                                'type' => Issue::TYPE_STORY,
+                                'type' => IssueTypesDefinition::TYPE_STORY,
                                 'deleted' => false
                             ]);
                     }
@@ -44,7 +65,7 @@ class IssueType extends AbstractType
                 [
                     'required' => true,
                     'label' => 'issues.issue.type.label',
-                    'choices' => Issue::getTypesDictionaryChoicesForNewEntries(),
+                    'choices' => $this->issueTypesDefinition->getTypesDictionaryChoicesForNewEntries(),
                     'constraints'   => new NotNull(),
                 ]
             )
@@ -98,23 +119,40 @@ class IssueType extends AbstractType
                     'class' => 'IssuesBundle\Entity\Issue',
                     'label' => 'issues.issue.relatedIssues.label',
                     'multiple' => true,
-                    'query_builder' => function (EntityRepository $er) {
-                        return $er->createQueryBuilder('i')
+                    'query_builder' => function (EntityRepository $er) use ($entity) {
+                        $parameters = [
+                            'deleted' => false
+                        ];
+
+                        $qb = $er->createQueryBuilder('i')
                             ->andWhere('i.deleted = :deleted')
-                            ->orderBy('i.summary', 'ASC')
-                            ->setParameters([
-                                'deleted' => false
-                            ]);
+                            ->orderBy('i.summary', 'ASC');
+
+                        if ($entity instanceof Issue && $entity->getId() > 0) {
+                            $qb->andWhere('i.id <> :currentId');
+
+                            $parameters['currentId'] = $entity->getId();
+                        }
+
+                        $qb->setParameters($parameters);
+
+                        return $qb;
                     }
                 ]
             );
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return 'issue_type';
     }
 
+    /**
+     * @param OptionsResolverInterface $resolver
+     */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(

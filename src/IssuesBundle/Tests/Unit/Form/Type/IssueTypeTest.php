@@ -6,6 +6,7 @@ use Genemu\Bundle\FormBundle\Form\JQuery\Type\Select2Type;
 use IssuesBundle\Entity\Issue;
 use IssuesBundle\Entity\Priority;
 use IssuesBundle\Form\Type\IssueType;
+use IssuesBundle\Model\Service\IssueTypesDefinition;
 use Oro\Bundle\FormBundle\Form\Type\OroEntitySelectOrCreateInlineType;
 use Oro\Bundle\FormBundle\Form\Type\OroJquerySelect2HiddenType;
 use Oro\Bundle\FormBundle\Form\Type\OroRichTextType;
@@ -16,7 +17,13 @@ use Symfony\Component\Form\PreloadedExtension;
 use Symfony\Component\Form\Test\TypeTestCase;
 use Symfony\Component\Validator\ConstraintViolationList;
 
-class IssueTypeText extends TypeTestCase
+/**
+ * Class IssueTypeTest
+ * @package IssuesBundle\Tests\Unit\Form\Type
+ *
+ * @SuppressWarnings(PHPMD)
+ */
+class IssueTypeTest extends TypeTestCase
 {
     private $validator;
 
@@ -106,9 +113,6 @@ class IssueTypeText extends TypeTestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-
-
-
         $queryBuilderChainMethods = ['where', 'orderBy', 'setParameters', 'getQuery', 'getSql'];
 
         $queryBuilder = $this->getMockBuilder('Doctrine\ORM\QueryBuilder')
@@ -121,7 +125,6 @@ class IssueTypeText extends TypeTestCase
                 ->method($method)
                 ->will($this->returnValue($queryBuilder));
         }
-
 
         $repository->method('createQueryBuilder')
             ->will($this->returnValue($queryBuilder));
@@ -149,7 +152,6 @@ class IssueTypeText extends TypeTestCase
         $htmlTagProvider->expects($this->any())
             ->method('getAllowedElements')
             ->willReturn(['br', 'a']);
-
 
         $classMetadata = $this->getMockBuilder(
             '\Doctrine\Common\Persistence\Mapping\ClassMetadata'
@@ -278,13 +280,15 @@ class IssueTypeText extends TypeTestCase
 
     public function testSubmitValidData()
     {
-        $issueType = new IssueType();
+        $issueTypeDefinition = new IssueTypesDefinition();
+
+        $issueType = new IssueType($issueTypeDefinition);
 
         $priority = new Priority();
         $priority->setName('test');
 
         $formData = array(
-            'type' => Issue::TYPE_BUG,
+            'type' => IssueTypesDefinition::TYPE_BUG,
             'summary' => 'test test',
             'description' => 'description 123',
         );

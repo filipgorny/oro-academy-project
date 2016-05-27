@@ -3,7 +3,6 @@
 namespace IssuesBundle\Tests\Functional\Search;
 
 use IssuesBundle\Entity\Issue;
-use Oro\Bundle\SearchBundle\Query\Criteria\ExpressionBuilder;
 use Oro\Bundle\TestFrameworkBundle\Test\WebTestCase;
 use Oro\Bundle\SearchBundle\Engine\Indexer as SearchIndexer;
 
@@ -32,7 +31,7 @@ class SearchTest extends WebTestCase
         /** @var $searchEngine EngineInterface */
         $searchEngine = $this->getContainer()->get('oro_search.search.engine');
 
-        $recordsCount = $searchEngine->reindex($class);
+        $searchEngine->reindex($class);
     }
 
     public function testFindsIssue()

@@ -2,7 +2,6 @@
 
 namespace IssuesBundle\Model\Service;
 
-use Doctrine\ORM\EntityManager;
 use IssuesBundle\Entity\Issue;
 use Oro\Bundle\UserBundle\Entity\User;
 
@@ -14,6 +13,10 @@ use Oro\Bundle\UserBundle\Entity\User;
  */
 class Collaboration
 {
+    /**
+     * @param User $user
+     * @param Issue $issue
+     */
     public function markUserAsCollaborator(User $user, Issue $issue)
     {
         if (!$issue->getCollaborators()->contains($user)) {

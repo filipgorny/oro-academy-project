@@ -141,7 +141,7 @@ datagrid:
                     options:
                         field_options:
                             multiple: true
-                            choices: "@issues.formatter.issue_formatter->getTypesDictionary"
+                            choices: "@issues.model.issue_types_definition->getTypesDictionary"
                 priorityName:
                     type: string
                     data_name: priorityName

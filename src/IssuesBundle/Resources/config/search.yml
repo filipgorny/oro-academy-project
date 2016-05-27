@@ -1,5 +1,5 @@
+# required fields: summary, code, type, priority, status, resolution, reporter, assignee
 IssuesBundle\Entity\Issue:
-# summary, code, type, priority, status, resolution, reporter, assignee
     alias: issues
     label: Issues
     route:

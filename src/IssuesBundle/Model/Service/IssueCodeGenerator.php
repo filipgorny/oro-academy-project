@@ -3,11 +3,20 @@
 namespace IssuesBundle\Model\Service;
 
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\QueryBuilder;
 use IssuesBundle\Entity\Issue;
 
+/**
+ * Class IssueCodeGenerator
+ * @package IssuesBundle\Model\Service
+ */
 class IssueCodeGenerator
 {
+    /**
+     * @param EntityManager $entityManager
+     * @param Issue $issue
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
     public function populateCode(EntityManager $entityManager, Issue $issue)
     {
         $today = new \DateTime('now');
@@ -27,6 +36,6 @@ class IssueCodeGenerator
 
         $issue->setCode($today->format('Y/m/d').'/'.$id);
 
-        // TODO consider that issues may be deleted
+        // TODO consider that issues may be deleted, improve the algorithm
     }
 }

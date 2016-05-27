@@ -6,11 +6,14 @@ use Doctrine\DBAL\Schema\Schema;
 use Oro\Bundle\ActivityBundle\Migration\Extension\ActivityExtension;
 use Oro\Bundle\ActivityBundle\Migration\Extension\ActivityExtensionAwareInterface;
 use Oro\Bundle\MigrationBundle\Migration\Installation;
-use Oro\Bundle\MigrationBundle\Migration\Migration;
 use Oro\Bundle\MigrationBundle\Migration\QueryBag;
 use Oro\Bundle\NoteBundle\Migration\Extension\NoteExtension;
 use Oro\Bundle\NoteBundle\Migration\Extension\NoteExtensionAwareInterface;
 
+/**
+ * Class IssuesBundleInstaller
+ * @package IssuesBundle\Migrations\Schema
+ */
 class IssuesBundleInstaller implements Installation, NoteExtensionAwareInterface, ActivityExtensionAwareInterface
 {
     /**
@@ -48,7 +51,6 @@ class IssuesBundleInstaller implements Installation, NoteExtensionAwareInterface
         $table->addColumn('organization_id', 'integer', ['notnull' => false]);
         $table->addColumn('priority_id', 'integer', ['notnull' => false]);
         $table->addColumn('assignee_id', 'integer', ['notnull' => false]);
-//        $table->addColumn('owner_id', 'integer', ['notnull' => false]);
         $table->addColumn('updated_by_id', 'integer', ['notnull' => false]);
         $table->addColumn('reporter_id', 'integer', ['notnull' => false]);
         $table->addColumn('created_at', 'datetime', []);
@@ -61,7 +63,6 @@ class IssuesBundleInstaller implements Installation, NoteExtensionAwareInterface
         $table->addColumn('parent_id', 'integer', ['notnull' => false]);
         $table->setPrimaryKey(['id']);
         $table->addIndex(['updated_by_id'], 'IDX_AADA29B1896DBBDE', []);
-//        $table->addIndex(['owner_id'], 'IDX_AADA29B17E3C61F9', []);
         $table->addIndex(['organization_id'], 'IDX_AADA29B132C8A3DE', []);
         $table->addIndex(['priority_id'], 'IDX_AADA29B1497B19F9', []);
         $table->addIndex(['resolution_id'], 'IDX_AADA29B112A1C43A', []);
@@ -97,11 +98,6 @@ class IssuesBundleInstaller implements Installation, NoteExtensionAwareInterface
         $table->setPrimaryKey(['id']);
     }
 
-    public function setNoteExtension(NoteExtension $noteExtension)
-    {
-        $this->noteExtension = $noteExtension;
-    }
-
     /**
      * Create pivot tables for many to many relations in the Issue
      *
@@ -126,8 +122,19 @@ class IssuesBundleInstaller implements Installation, NoteExtensionAwareInterface
         return 'v1_0';
     }
 
+    /**
+     * @param ActivityExtension $activityExtension
+     */
     public function setActivityExtension(ActivityExtension $activityExtension)
     {
         $this->activityExtension = $activityExtension;
+    }
+
+    /**
+     * @param NoteExtension $noteExtension
+     */
+    public function setNoteExtension(NoteExtension $noteExtension)
+    {
+        $this->noteExtension = $noteExtension;
     }
 }

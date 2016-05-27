@@ -28,6 +28,8 @@ class LoadWorkflowDefinitions extends AbstractFixture implements ContainerAwareI
 
     /**
      * {@inheritDoc}
+     *
+     * @SuppressWarnings(PHPMD)
      */
     public function load(ObjectManager $manager)
     {

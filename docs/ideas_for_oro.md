@@ -1,3 +1,5 @@
+## Ideas and feedback for Oro
+
 Please note that all below opinions are personal and are written by the person who is just getting familiar with Oro Bundles.
 These are not Oro team's statements and it is not an official document, please treat it as a notes of ideas written during
 the development process.

@@ -9,6 +9,10 @@ use IssuesBundle\Model\Service\IssueCodeGenerator;
 use IssuesBundle\Model\Service\IssueUpdateStamp;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
+/**
+ * Class IssuesPersistingListener
+ * @package IssuesBundle\EventListeners
+ */
 class IssuesPersistingListener
 {
     /**
@@ -31,6 +35,13 @@ class IssuesPersistingListener
      */
     private $tokenStorage;
 
+    /**
+     * IssuesPersistingListener constructor.
+     * @param IssueUpdateStamp $issueUpdateStamp
+     * @param IssueCodeGenerator $issueCodeGenerator
+     * @param Collaboration $collaboration
+     * @param TokenStorageInterface $tokenStorage
+     */
     public function __construct(
         IssueUpdateStamp $issueUpdateStamp,
         IssueCodeGenerator $issueCodeGenerator,
@@ -42,7 +53,10 @@ class IssuesPersistingListener
         $this->collaboration = $collaboration;
         $this->tokenStorage = $tokenStorage;
     }
-    
+
+    /**
+     * @param LifecycleEventArgs $args
+     */
     public function prePersist(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
@@ -64,6 +78,9 @@ class IssuesPersistingListener
         }
     }
 
+    /**
+     * @param LifecycleEventArgs $args
+     */
     public function preUpdate(LifecycleEventArgs $args)
     {
         return $this->prePersist($args);

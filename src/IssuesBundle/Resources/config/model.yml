@@ -1,0 +1,16 @@
+services:
+    issues.model.issue_types_definition:
+        class: IssuesBundle\Model\Service\IssueTypesDefinition
+
+    issues.model.issue_update_stamp:
+        class: IssuesBundle\Model\Service\IssueUpdateStamp
+        arguments:
+            - "@security.token_storage"
+
+    issues.model.issue_code_generator:
+        class: IssuesBundle\Model\Service\IssueCodeGenerator
+
+    issues.model.issue_deletion:
+        class: IssuesBundle\Model\Service\IssueDeletion
+        arguments:
+            - "@doctrine.orm.entity_manager"

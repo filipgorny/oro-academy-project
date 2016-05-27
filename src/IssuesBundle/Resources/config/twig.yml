@@ -1,0 +1,8 @@
+services:
+    issues.twig.extension.issue_type:
+        class: IssuesBundle\Twig\IssueTypeExtension
+        public: false
+        arguments:
+            - "@issues.model.issue_types_definition"
+        tags:
+            - { name: twig.extension }

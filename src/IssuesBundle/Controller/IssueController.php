@@ -3,14 +3,13 @@
 namespace IssuesBundle\Controller;
 
 use IssuesBundle\Entity\Issue;
+use IssuesBundle\Model\Service\IssueTypesDefinition;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Oro\Bundle\SecurityBundle\Annotation\AclAncestor;
-use Oro\Bundle\SecurityBundle\Annotation\Acl;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Oro\Bundle\UserBundle\Entity\User;
 
@@ -44,7 +43,6 @@ class IssueController extends Controller
 
     /**
      * @Route("/view/{id}", name="issues.issue_view", requirements={"id"="\d+"})
-     * @AclAncestor("issues.issue_view")
      * @Template
      */
     public function viewAction(Issue $issue)
@@ -74,7 +72,6 @@ class IssueController extends Controller
             }
 
             $issue->setParent($parentIssue);
-
         }
 
         return $this->updateAction($issue, $request);
@@ -113,7 +110,7 @@ class IssueController extends Controller
             $issue->setReporter($currentUser);
 
             if ($issue->getParent()) {
-                $issue->setType(Issue::TYPE_SUBTASK);
+                $issue->setType(IssueTypesDefinition::TYPE_SUBTASK);
             }
 
             $em = $this->getDoctrine()->getManager();
@@ -186,8 +183,6 @@ class IssueController extends Controller
                  * @var $issue Issue
                  */
                 $issue = $form->getData();
-
-
 
                 $issue->setReporter($currentUser);
 

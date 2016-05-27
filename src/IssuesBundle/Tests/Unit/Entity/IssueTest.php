@@ -3,6 +3,7 @@
 namespace IssuesBundle\Tests\Unit\Entity;
 
 use IssuesBundle\Entity\Issue;
+use IssuesBundle\Model\Service\IssueTypesDefinition;
 
 class IssueTest extends \PHPUnit_Framework_TestCase
 {
@@ -16,23 +17,6 @@ class IssueTest extends \PHPUnit_Framework_TestCase
         $issue->setDeleted(true);
 
         $this->assertTrue($issue->isDeleted());
-    }
-
-    public function testReturnsValidTypeName()
-    {
-        $issue = new Issue();
-
-        $issue->setType(Issue::TYPE_BUG);
-
-        $this->assertEquals($issue->getTypeName(), 'bug');
-
-        $issue->setType(Issue::TYPE_STORY);
-
-        $this->assertEquals($issue->getTypeName(), 'story');
-
-        $issue->setType(Issue::TYPE_SUBTASK);
-
-        $this->assertEquals($issue->getTypeName(), 'subtask');
     }
 
     public function testReturnsValidLabel()
@@ -63,22 +47,6 @@ class IssueTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($childIssue->getParent(), $issue);
     }
 
-    public function testReturnsTypeDictionary()
-    {
-        $dictionary = Issue::getTypesDictionary();
-
-        $this->assertTrue(is_array($dictionary));
-        $this->assertTrue(count($dictionary) > 1);
-    }
-
-    public function testReturnsTypesDictionaryChoicesForNewEntries()
-    {
-        $dictionary = Issue::getTypesDictionaryChoicesForNewEntries();
-
-        $this->assertTrue(is_array($dictionary));
-        $this->assertTrue(count($dictionary) > 1);
-    }
-
     public function testConvertsToString()
     {
         $issue = new Issue();
@@ -91,11 +59,11 @@ class IssueTest extends \PHPUnit_Framework_TestCase
     public function testStoriesMayHaveSubtasks()
     {
         $issue = new Issue();
-        $issue->setType(Issue::TYPE_BUG);
+        $issue->setType(IssueTypesDefinition::TYPE_BUG);
 
         $this->assertFalse($issue->mayHaveSubtasks());
 
-        $issue->setType(Issue::TYPE_STORY);
+        $issue->setType(IssueTypesDefinition::TYPE_STORY);
 
         $this->assertTrue($issue->mayHaveSubtasks());
     }

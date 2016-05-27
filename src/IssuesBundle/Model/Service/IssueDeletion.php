@@ -32,6 +32,9 @@ class IssueDeletion
      */
     public function deleteIssueById($id)
     {
+        /**
+         * @var Issue $issue
+         */
         $issue = $this->entityManager->getRepository('IssuesBundle:Issue')->findOneBy([
             'id' => $id,
             'deleted' => false

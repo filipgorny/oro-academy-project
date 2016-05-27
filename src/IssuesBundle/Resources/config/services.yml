@@ -21,29 +21,22 @@ services:
         class: IssuesBundle\Form\Type\IssueType
         tags:
             - { name: form.type, alias: issue_type }
+        arguments:
+            - "@issues.model.issue_types_definition"
 
     issues.form.type.issue_api:
         class: IssuesBundle\Form\Type\IssueApiType
         tags:
             - { name: form.type, alias: issue_api_type }
+        arguments:
+            - "@issues.model.issue_types_definition"
 
     issues.form.type.issue_resolution:
         class: IssuesBundle\Form\Type\IssueResolutionType
         tags:
             - { name: form.type, alias: issue_resolution_type }
-
-    issues.model.issue_update_stamp:
-        class: IssuesBundle\Model\Service\IssueUpdateStamp
         arguments:
-            - "@security.token_storage"
-
-    issues.model.issue_code_generator:
-        class: IssuesBundle\Model\Service\IssueCodeGenerator
-
-    issues.model.issue_deletion:
-        class: IssuesBundle\Model\Service\IssueDeletion
-        arguments:
-            - "@doctrine.orm.entity_manager"
+            - "@issues.model.issue_types_definition"
 
     issues.listener.issue_persisting:
         class: IssuesBundle\EventListeners\IssuesPersistingListener
@@ -68,6 +61,8 @@ services:
 
     issues.formatter.issue_formatter:
         class: IssuesBundle\Formatter\IssueFormatter
+        arguments:
+            - "@issues.model.issue_types_definition"
 
     issues.issue_manager.api:
         class: Oro\Bundle\SoapBundle\Entity\Manager\ApiEntityManager

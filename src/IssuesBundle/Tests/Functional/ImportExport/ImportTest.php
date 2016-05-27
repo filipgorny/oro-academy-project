@@ -74,15 +74,9 @@ class ImportTest extends WebTestCase
 
         $crawler = $this->client->getCrawler();
 
-        file_put_contents('/tmp/fff3.html', $this->client->getResponse()->getContent());
-
         $this->assertEquals(0, $crawler->filter('.import-errors')->count());
 
-        //
-
         $this->client->followRedirects(false);
-
-
 
         $this->client->request(
             'GET',

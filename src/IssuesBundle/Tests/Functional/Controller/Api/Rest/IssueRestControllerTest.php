@@ -5,6 +5,7 @@ namespace IssuesBundle\Tests\Functional\Controller\Api\Rest;
 
 use IssuesBundle\Entity\Issue;
 use IssuesBundle\Entity\Priority;
+use IssuesBundle\Model\Service\IssueTypesDefinition;
 use Oro\Bundle\TestFrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Routing\Router;
 
@@ -64,7 +65,7 @@ class IssueRestControllerTest extends WebTestCase
             'summary' => 'test summary',
             'description' => 'test description',
             'priority' => $priority->getId(),
-            'type' => Issue::TYPE_STORY
+            'type' => IssueTypesDefinition::TYPE_STORY
         ];
 
         $this->client->request('POST', $this->getUrl('issues_api_post_issue'), $requestData);
@@ -91,7 +92,7 @@ class IssueRestControllerTest extends WebTestCase
             'summary' => 'updated summary',
             'description' => 'updated description',
             'priority' => $priority->getId(),
-            'type' => Issue::TYPE_STORY
+            'type' => IssueTypesDefinition::TYPE_STORY
         ];
 
         $this->client->request('PUT', $this->getUrl('issues_api_put_issue', ['id' => $issue->getId()]), $requestData);

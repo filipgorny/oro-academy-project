@@ -5,7 +5,6 @@ namespace IssuesBundle\Tests\Unit\Model\Service;
 use IssuesBundle\Entity\Issue;
 use IssuesBundle\Model\Service\IssueUpdateStamp;
 use Oro\Bundle\UserBundle\Entity\User;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 class IssueUpdateStampTest extends \PHPUnit_Framework_TestCase
 {
