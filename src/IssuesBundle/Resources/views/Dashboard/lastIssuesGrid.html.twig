@@ -7,7 +7,7 @@
 
 {% block actions %}
     {% set actions = [{
-    'url': path('issues.issues_collaborated_recently'),
+    'url': path('issues.issues_collaborated_recently') ~ '?grid%5Bdashboard-recent-issues-grid%5D=i%3D1%26p%3D100%26c%3Dcode1.summary1.tags1%26v%3D__all__',
     'type': 'link',
     'label': 'issues.collaborated_recently.view_all'|trans
     }] %}

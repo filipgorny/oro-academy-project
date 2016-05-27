@@ -41,6 +41,8 @@ class LoadIssues extends AbstractFixture
         $issue->setCreatedAt(new \DateTime('now'));
         $issue->setUpdatedAt(new \DateTime('now'));
 
+        $issue->getCollaborators()->add($user);
+
         foreach ($this->createSubTasks($manager) as $subtask) {
             $issue->addChild($subtask);
 
@@ -86,6 +88,8 @@ class LoadIssues extends AbstractFixture
             $issue->setAssignee($user);
             $issue->setCreatedAt(new \DateTime('now'));
             $issue->setUpdatedAt(new \DateTime('now'));
+
+            $issue->getCollaborators()->add($user);
 
             $manager->persist($issue);
 

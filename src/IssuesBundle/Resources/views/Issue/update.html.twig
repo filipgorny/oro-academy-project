@@ -49,7 +49,6 @@
 
     {% set fields = [
     form_row(form.summary),
-    form_row(form.type),
     form_row(form.assignee),
     form_row(form.priority),
     form_row(form.description),
@@ -58,6 +57,10 @@
 
     {% if entity.parent %}
         {% set fields = [form_row(form.parent)]|merge(fields) %}
+    {% endif %}
+
+    {% if not entity.parent %}
+        {% set fields = [form_row(form.type)]|merge(fields) %}
     {% endif %}
 
     {% set dataBlocks = [{

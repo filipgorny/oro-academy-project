@@ -27,9 +27,9 @@ datagrid:
                         - { join: issue.assignee, alias: assignee }
                 from:
                     { table: IssuesBundle:Issue, alias:issue }
-            where:
-                and:
-                    - issue.deleted = false
+                where:
+                    and:
+                        - issue.deleted = false
         columns:
             code:
                 label: issues.issue.code.label
@@ -165,6 +165,11 @@ datagrid:
     dashboard-recent-issues-grid:
         options:
             entityHint: issue
+            toolbarOptions:
+                hide: true
+                pageSize:
+                    items: [10, 25, 50, 100]
+                    default_per_page: 10
         source:
             type: orm
             query:
@@ -180,6 +185,8 @@ datagrid:
                 where:
                     and:
                       - collaborator.id = @oro_security.security_facade->getLoggedUserId
+                    and:
+                        - issue.deleted = false
         columns:
             code:
                 label: issues.issue.code.label
@@ -193,12 +200,6 @@ datagrid:
                     data_name: issue.summary
             default:
                 id: DESC
-        options:
-            toolbarOptions:
-                hide: true
-                pageSize:
-                    items: [10]
-                    default_per_page: 10
         properties:
             id: ~
             view_link:
@@ -232,7 +233,9 @@ datagrid:
                         - { join: issue.assignee, alias: assignee }
                 where:
                     and:
-                      - reporter.id = @oro_security.security_facade->getLoggedUserId or assignee.id = @oro_security.security_facade->getLoggedUserId
+                        - reporter.id = @oro_security.security_facade->getLoggedUserId or assignee.id = @oro_security.security_facade->getLoggedUserId
+                    and:
+                        - issue.deleted = false
         columns:
             code:
                 label: issues.issue.code.label

@@ -25,6 +25,7 @@ class IssueType extends AbstractType
                 [
                     'class' => 'IssuesBundle\Entity\Issue',
                     'label' => 'issues.issue.parent.label',
+                    'placeholder' => '',
                     'query_builder' => function (EntityRepository $er) {
                         return $er->createQueryBuilder('i')
                             ->where('i.type = :type')

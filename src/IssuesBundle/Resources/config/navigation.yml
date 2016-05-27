@@ -1,11 +1,5 @@
 oro_menu_config:
     items:
-        issues_report:
-            label: Issues
-            route: issues.issues_index
-            routeParameters:
-                reportGroupName: issues
-                reportName:      all_issues
         issues_tab:
             label: Issues
             uri:   '#'
@@ -17,6 +11,12 @@ oro_menu_config:
         issues_add:
             label: Add new
             route: issues.issue_create
+        issues_report:
+            label: Issues
+            route: issues.issues_index_report
+            routeParameters:
+                reportGroupName: issues
+                reportName:      all_issues
 
     tree:
         application_menu:

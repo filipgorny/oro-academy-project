@@ -65,7 +65,6 @@
                         {%- set userData -%}
                             {%- if entity.reporter -%}
                                 {{ U.render_user_name(entity.reporter) }}
-                                {#{{ U.user_business_unit_name(entity.reporter) }}#}
                             {%- endif -%}
                         {%- endset -%}
 
@@ -77,7 +76,6 @@
                         {%- set userData -%}
                             {%- if entity.assignee -%}
                                 {{ U.render_user_name(entity.assignee) }}
-                                {#{{ U.user_business_unit_name(entity.assignee) }}#}
                             {%- endif -%}
                         {%- endset -%}
 

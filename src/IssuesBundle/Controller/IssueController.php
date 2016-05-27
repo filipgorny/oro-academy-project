@@ -21,6 +21,7 @@ class IssueController extends Controller
 {
     /**
      * @Route("/", name="issues.issues_index")
+     * @Route("/report", name="issues.issues_index_report")
      * @Template
      */
     public function indexAction()
@@ -57,12 +58,6 @@ class IssueController extends Controller
         );
     }
 
-//* @Acl(
-//*     id="issues.issue_create",
-//*     type="entity",
-//*     class="IssuesBundle:Issue",
-//*     permission="CREATE"
-//* )
     /**
      * @Route("/create/{parentId}", name="issues.issue_create", defaults={"parentId" = 0})
      * @Template("IssuesBundle:Issue:update.html.twig")
@@ -79,21 +74,12 @@ class IssueController extends Controller
             }
 
             $issue->setParent($parentIssue);
-            $issue->setType(Issue::TYPE_SUBTASK);
+
         }
 
         return $this->updateAction($issue, $request);
     }
 
-    // TODO solve ACL issue
-    // - when I add this entry, I am not able to edit an issue even if I'm admin
-    //
-    // * @Acl(
-    // *     id="issues.issue_update",
-    // *     type="entity",
-    // *     class="IssuesBundle:Issue",
-    // *     permission="UPDATE"
-    // * )
     /**
      * @Route("/update/{id}", name="issues.issue_update", requirements={"id"="\d+"})
      * @Template("IssuesBundle:Issue:update.html.twig")
@@ -126,6 +112,10 @@ class IssueController extends Controller
 
             $issue->setReporter($currentUser);
 
+            if ($issue->getParent()) {
+                $issue->setType(Issue::TYPE_SUBTASK);
+            }
+
             $em = $this->getDoctrine()->getManager();
 
             $em->persist($issue);
@@ -155,19 +145,9 @@ class IssueController extends Controller
      * @Route("/delete/{id}", name="issues.issue_delete",
      *     requirements={"id"="\d+"})
      */
-    public function deleteAction(Issue $issue)
+    public function deleteAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $issue->setDeleted(true); // TODO - change to a service
-
-        $em->persist($issue);
-        $em->flush();
-
-        $deletedIssue = $em->getRepository('IssuesBundle\Entity\Issue')
-            ->find($issue->getId());
-
-        if ($deletedIssue->isDeleted()) {
+        if ($this->get('issues.model.issue_deletion')->deleteIssueById($id)) {
             $this->addFlash(
                 'success',
                 $this->get('translator')
