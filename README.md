@@ -5,13 +5,11 @@ This is a training project, made in purpose of studying [Oro Platform](https://g
 
 ## Installation
 
-This project is using composer to manage dependencies, ensure it is installed on your system
-and provide a valid path in the first line of below example:
+To view installation process, visit [Installation](docs/installation.md) page.
 
-```
-php composer.phar install
-php app/console oro:install
-```
+## Usage
+
+Usage instruction and list of featers is available under [features and usage](docs/features_and_usage.md) page.
 
 ## Testing
 

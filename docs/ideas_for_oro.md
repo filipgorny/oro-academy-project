@@ -22,10 +22,6 @@ the attribute data I have set in one of steps, it was not included in the docs a
 out was to debug the code. It should be mandatory to provide documentation for reading state, when there is a document
 on how to modify it.
 
-* Browserify instead of require-js
-Currently used way to load javascript files is generating massive traffic of many HTTP requests. I would suggest to merge
-javascript files on the server side and serve it less requests. Gulp/grunt/webpack usage may be a good way to do that.
-
 * Form handlers may be replaced with interface implementation
 Form handlers is the idea from FOS that is not official symfony way and even the authors went away from this solution.
 Adding an interface would be a better solution to use when developing with SoapBundle.
