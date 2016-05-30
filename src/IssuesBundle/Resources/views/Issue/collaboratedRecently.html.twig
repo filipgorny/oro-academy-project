@@ -24,3 +24,18 @@
         </script>
     {% endif %}
 {% endblock %}
+
+{% block breadcrumb %}
+    {% set breadcrumbs = [{
+        'label': 'issues.issue.entity_plural_label'|trans
+    }, {
+        'label': 'issues.collaborated_recently.label'|trans
+    }] %}
+    <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+            <li>
+                {{ breadcrumb.label }}{% if not loop.last %}<span class="divider">/</span>{% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock breadcrumb %}

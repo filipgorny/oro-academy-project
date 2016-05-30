@@ -26,5 +26,6 @@ class IssuesExtension extends Extension
         $loader->load('model.yml');
         $loader->load('importexport.yml');
         $loader->load('twig.yml');
+        $loader->load('repositories.yml');
     }
 }

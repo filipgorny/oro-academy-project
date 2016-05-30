@@ -31,6 +31,8 @@ issues:
             label: Subtasks
         relatedIssues:
             label: Related Issues
+        related_issues:
+            label: Related Issues
         collaborators:
             label: Collaborators
         createdAt:
@@ -43,8 +45,10 @@ issues:
             label: Status
         deleted:
             label: Deleted
-        update_at:
+        updated_at:
             label: Updated at
+        updated_by:
+            label: Updated by
         created_at:
             label: Created at
         flashMessages:
@@ -56,7 +60,7 @@ issues:
                 success: Issue deleted succesfuly
     add_subtask: Add subtask
     collaborated_recently:
-        label: Colalborated recently
+        label: Collaborated recently
         view_all: View all
     dashboard:
         issues_by_status_chart:
@@ -71,3 +75,8 @@ issues:
         label: Use this dialog to add an issue for viewed user
         button_label: Add issue
     import_title: Import issues
+    types:
+        bug: bug
+        task: task
+        subtask: subtask
+        story: story

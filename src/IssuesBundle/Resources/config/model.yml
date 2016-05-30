@@ -1,6 +1,8 @@
 services:
     issues.model.issue_types_definition:
         class: IssuesBundle\Model\Service\IssueTypesDefinition
+        arguments:
+            - "@translator"
 
     issues.model.issue_update_stamp:
         class: IssuesBundle\Model\Service\IssueUpdateStamp
@@ -12,5 +14,10 @@ services:
 
     issues.model.issue_deletion:
         class: IssuesBundle\Model\Service\IssueDeletion
+        arguments:
+            - "@doctrine.orm.entity_manager"
+
+    issues.model.provider.statuses:
+        class: IssuesBundle\Model\Service\Provider\StatusesProvider
         arguments:
             - "@doctrine.orm.entity_manager"

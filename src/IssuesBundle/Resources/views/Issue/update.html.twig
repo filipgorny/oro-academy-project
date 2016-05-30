@@ -1,6 +1,8 @@
 {% extends 'OroUIBundle:actions:update.html.twig' %}
 {% form_theme form with 'OroFormBundle:Form:fields.html.twig' %}
 
+{% oro_title_set({params : {"%entity.code%": entity.code|default('N/A') }}) %}
+
 {% if form.vars.value.id %}
     {% set formAction = path('issues.issue_update', { 'id': form.vars.value.id }) %}
 {% else %}
@@ -32,8 +34,8 @@
         {% set breadcrumbs = {
         'entity':      form.vars.value,
         'indexPath':   path('issues.issues_index'),
-        'indexLabel': 'issues.issue.entity_label'|trans,
-        'entityTitle': form.vars.value
+        'indexLabel': 'issues.issue.entity_label_plural'|trans,
+        'entityTitle': form.vars.value.label
         } %}
         {{ parent() }}
     {% else %}

@@ -5,7 +5,7 @@ namespace IssuesBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="IssuesBundle\Entity\Repository\PriorityRepository")
  * @ORM\Table(name="oro_issues_priorities")
  */
 class Priority

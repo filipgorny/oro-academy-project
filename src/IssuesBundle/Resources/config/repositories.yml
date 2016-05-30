@@ -1,0 +1,6 @@
+services:
+    issues.repository.priority:
+        class: IssuesBundle\Entity\Repository\PriorityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - "IssuesBundle:Priority"

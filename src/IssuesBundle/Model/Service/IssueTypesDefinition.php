@@ -2,6 +2,8 @@
 
 namespace IssuesBundle\Model\Service;
 
+use Symfony\Component\Translation\TranslatorInterface;
+
 /**
  * Class IssueTypesDefinition
  * @package IssuesBundle\Model\Service
@@ -11,6 +13,21 @@ class IssueTypesDefinition
     const TYPE_BUG = 1;
     const TYPE_SUBTASK = 2;
     const TYPE_STORY = 3;
+    const TYPE_TASK = 4;
+
+    /**
+     * @var TranslatorInterface
+     */
+    private $translator;
+
+    /**
+     * IssueTypesDefinition constructor.
+     * @param TranslatorInterface $translator
+     */
+    public function __construct(TranslatorInterface $translator)
+    {
+        $this->translator = $translator;
+    }
 
     /**
      * @return array
@@ -26,20 +43,22 @@ class IssueTypesDefinition
     public function getTypesDictionary()
     {
         return [
-            self::TYPE_BUG => 'bug',
-            self::TYPE_STORY => 'story',
-            self::TYPE_SUBTASK => 'subtask',
+            self::TYPE_BUG => $this->translateTypeName('bug'),
+            self::TYPE_TASK => $this->translateTypeName('task'),
+            self::TYPE_STORY => $this->translateTypeName('story'),
+            self::TYPE_SUBTASK => $this->translateTypeName('subtask')
         ];
     }
 
     /**
      * @return array
      */
-    public static function getTypesDictionaryChoicesForNewEntries()
+    public function getTypesDictionaryChoicesForNewEntries()
     {
         return [
-            self::TYPE_BUG => 'bug',
-            self::TYPE_STORY => 'story',
+            self::TYPE_BUG => $this->translateTypeName('bug'),
+            self::TYPE_TASK => $this->translateTypeName('task'),
+            self::TYPE_STORY => $this->translateTypeName('story'),
         ];
     }
 
@@ -52,5 +71,10 @@ class IssueTypesDefinition
         if (array_key_exists($type, $this->getTypesDictionary())) {
             return $this->getTypesDictionary()[$type];
         }
+    }
+
+    private function translateTypeName($typeName)
+    {
+        return $this->translator->trans('issues.types.'.$typeName);
     }
 }

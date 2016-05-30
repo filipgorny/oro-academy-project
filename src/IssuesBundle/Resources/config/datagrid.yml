@@ -8,6 +8,7 @@ datagrid:
                     - issue.id
                     - issue.code
                     - issue.summary
+                    - priority.id as priorityId
                     - priority.name as priorityName
                     - resolution.name as resolutionName
                     - issue.type
@@ -15,7 +16,8 @@ datagrid:
                     - CONCAT(assignee.firstName, CONCAT(' ', assignee.lastName)) as assigneeName
                     - issue.createdAt
                     - issue.updatedAt
-                    - workflowStep.label as workflowStepLabel
+                    - workflowStep.id as workflowStepId
+                    - workflowStep.label as status
                 from:
                     - { table: IssuesBundle:Issue, alias: issue }
                 join:
@@ -42,7 +44,6 @@ datagrid:
                 callable: "@issues.formatter.issue_formatter->getTypeCallback"
             priorityName:
                 label: issues.issue.priority.label
-                label: issues.issue.type.label
             reporterName:
                 type: twig
                 label: issues.issue.reporter.label
@@ -57,10 +58,10 @@ datagrid:
             updatedAt:
                 label: issues.issue.updatedAt.label
                 frontend_type: date
+            status:
+                label: issues.issue.status.label
             resolutionName:
                 label: issues.issue.resolution.label
-            workflowStepLabel:
-                label: issues.issue.status.label
         sorters:
             columns:
                 code:
@@ -81,7 +82,7 @@ datagrid:
                     data_name: issue.updatedAt
                 createdAt:
                     data_name: issue.createdAt
-                workflowStepLabel:
+                status:
                     data_name: workflowStep.stepOrder
             default:
                 updatedAt: DESC
@@ -143,8 +144,12 @@ datagrid:
                             multiple: true
                             choices: "@issues.model.issue_types_definition->getTypesDictionary"
                 priorityName:
-                    type: string
-                    data_name: priorityName
+                    type: choice
+                    data_name: priorityId
+                    options:
+                        field_options:
+                            multiple: true
+                            choices: "@issues.repository.priority->findAllAlphabeticallyArray"
                 resolutionName:
                     type: string
                     data_name: resolutionName
@@ -160,8 +165,15 @@ datagrid:
                 updatedAt:
                     type: datetime
                     data_name: issue.updatedAt
+                status:
+                    type: choice
+                    data_name: workflowStepId
+                    options:
+                        field_options:
+                            multiple: true
+                            choices: "@issues.model.provider.statuses->getStatusesArray"
 
-
+    # dashboard widget grid
     dashboard-recent-issues-grid:
         options:
             entityHint: issue
@@ -177,11 +189,14 @@ datagrid:
                     - issue.id
                     - issue.code
                     - issue.summary
+                    - workflowStep.id as workflowStepId
+                    - workflowStep.label as status
                 from:
                     - { table: IssuesBundle\Entity\Issue, alias: issue }
                 join:
                     left:
                         - { join: issue.collaborators, alias: collaborator }
+                        - { join: issue.workflowStep, alias: workflowStep }
                 where:
                     and:
                       - collaborator.id = @oro_security.security_facade->getLoggedUserId
@@ -192,6 +207,8 @@ datagrid:
                 label: issues.issue.code.label
             summary:
                 label: issues.issue.summary.label
+            status:
+                label: issues.issue.status.label
         sorters:
             columns:
                 code:
@@ -225,12 +242,15 @@ datagrid:
                     - issue.id
                     - issue.code
                     - issue.summary
+                    - workflowStep.id as workflowStepId
+                    - workflowStep.label as status
                 from:
                     - { table: IssuesBundle\Entity\Issue, alias: issue }
                 join:
                     left:
                         - { join: issue.reporter, alias: reporter }
                         - { join: issue.assignee, alias: assignee }
+                        - { join: issue.workflowStep, alias: workflowStep }
                 where:
                     and:
                         - reporter.id = @oro_security.security_facade->getLoggedUserId or assignee.id = @oro_security.security_facade->getLoggedUserId
@@ -241,6 +261,8 @@ datagrid:
                 label: issues.issue.code.label
             summary:
                 label: issues.issue.summary.label
+            status:
+                label: issues.issue.status.label
         sorters:
             columns:
                 code:
