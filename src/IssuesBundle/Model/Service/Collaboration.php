@@ -3,7 +3,6 @@
 namespace IssuesBundle\Model\Service;
 
 use IssuesBundle\Entity\Issue;
-use Oro\Bundle\UserBundle\Entity\User;
 
 /**
  * Manager domain service, for adding users to collaboration list in the Issue model.
@@ -13,14 +12,26 @@ use Oro\Bundle\UserBundle\Entity\User;
  */
 class Collaboration
 {
-    /**
-     * @param User $user
-     * @param Issue $issue
-     */
-    public function markUserAsCollaborator(User $user, Issue $issue)
+    public function updateCollaborators(Issue $issue, $newUsers = [])
     {
-        if (!$issue->getCollaborators()->contains($user)) {
-            $issue->getCollaborators()->add($user);
+        $collaborators = $issue->getCollaborators();
+
+        foreach ($newUsers as $user) {
+            if (!$collaborators->contains($user)) {
+                $collaborators->add($user);
+            }
         }
+
+        if (!$collaborators->contains($issue->getAssignee())) {
+            $collaborators->add($issue->getAssignee());
+        }
+
+        if (!$collaborators->contains($issue->getReporter())) {
+            $collaborators->add($issue->getReporter());
+        }
+        
+        $issue->setCollaborators($collaborators);
+
+        $issue->setCode($issue->getCode().' - edited');
     }
 }

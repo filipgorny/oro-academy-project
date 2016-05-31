@@ -26,7 +26,7 @@ class IssueController extends Controller
     public function indexAction()
     {
         return [
-            'entity_class' => 'IssueBundle\Entity\Issue'
+            'entity_class' => 'IssuesBundle\Entity\Issue'
         ];
     }
 
@@ -37,17 +37,26 @@ class IssueController extends Controller
     public function collaboratedRecentlyAction()
     {
         return [
-            'entity_class' => 'IssueBundle\Entity\Issue'
+            'entity_class' => 'IssuesBundle\Entity\Issue'
         ];
     }
 
     /**
+     * @param int $id
+     * @return array
+     *
      * @Route("/view/{id}", name="issues.issue_view", requirements={"id"="\d+"})
      * @Template
      */
-    public function viewAction(Issue $issue)
+    public function viewAction($id)
     {
-        if ($issue->isDeleted()) {
+        $issue = $this->getDoctrine()->getRepository('IssuesBundle:Issue')
+            ->findOneBy([
+                'id' => $id,
+                'deleted' => false
+            ]);
+
+        if ($issue === null) {
             throw new NotFoundHttpException();
         }
 
@@ -112,7 +121,9 @@ class IssueController extends Controller
             if ($issue->getParent()) {
                 $issue->setType(IssueTypesDefinition::TYPE_SUBTASK);
             }
-
+            
+            $this->get('issues.model.collaboration')->updateCollaborators($issue);
+            
             $em = $this->getDoctrine()->getManager();
 
             $em->persist($issue);

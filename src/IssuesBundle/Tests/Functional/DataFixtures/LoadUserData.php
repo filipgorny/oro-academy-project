@@ -11,6 +11,8 @@ class LoadUserData extends AbstractFixture implements ContainerAwareInterface
 {
     const USER_FIRST_USERNAME = 'issues_test_user_1';
     const USER_SECOND_USERNAME = 'issues_test_user_2';
+    const USER_THIRD_USERNAME = 'issues_test_user_3';
+
     const PASSWORD = 'sample_password';
 
     /**
@@ -35,7 +37,8 @@ class LoadUserData extends AbstractFixture implements ContainerAwareInterface
 
         $users = [
             self::USER_FIRST_USERNAME => ['firstname' => 'John', 'lastname' => 'Smith'],
-            self::USER_SECOND_USERNAME => ['firstname' => 'Alice', 'lastname' => 'Jobs']
+            self::USER_SECOND_USERNAME => ['firstname' => 'Alice', 'lastname' => 'Jobs'],
+            self::USER_THIRD_USERNAME => ['firstname' => 'Jacob', 'lastname' => 'Brown']
         ];
 
         $group = $manager->getRepository('OroUserBundle:Group')

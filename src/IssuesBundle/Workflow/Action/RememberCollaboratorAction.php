@@ -44,9 +44,9 @@ class RememberCollaboratorAction implements ActionInterface
     public function execute($context)
     {
         if ($this->tokenStorage->getToken()) {
-            $this->collaboration->markUserAsCollaborator(
-                $this->tokenStorage->getToken()->getUser(),
-                $context->getEntity()
+            $this->collaboration->updateCollaborators(
+                $context->getEntity(),
+                [$this->tokenStorage->getToken()->getUser()]
             );
         }
     }

@@ -9,7 +9,7 @@ To view installation process, visit [Installation](docs/installation.md) page.
 
 ## Usage
 
-Usage instruction and list of featers is available under [features and usage](docs/features_and_usage.md) page.
+Usage instruction and list of features is available under [features and usage](docs/features_and_usage.md) page.
 
 ## Testing
 
@@ -31,7 +31,7 @@ For more details please see the link below.
 [List of improvements that may be added](docs/improvements.md)
 
 ## Known issues
-Some issues were spotted due the development and are awaiting to be solved in consultation with trainer.
+Some issues were spotted due the development and are awaiting to be solved in consultation with the trainer.
 
 [List of issues](docs/issues.md)
 

@@ -1,4 +1,4 @@
-## List of known issues
+## List of spotted issues
 
 #### Discussed already
 

@@ -77,7 +77,10 @@
                     {{ UI.renderProperty('issues.issue.type.label'|trans, entity.type|issue_type_name) }}
                     {{ UI.renderProperty('issues.issue.createdAt.label'|trans, entity.createdAt|oro_format_datetime) }}
                     {{ UI.renderProperty('issues.issue.updatedAt.label'|trans, entity.updatedAt|oro_format_datetime) }}
-                    {{ UI.renderProperty('issues.issue.priority.label'|trans, entity.priority.name) }}
+
+                    {% if entity.priority is not null %}
+                        {{ UI.renderProperty('issues.issue.priority.label'|trans, entity.priority.name) }}
+                    {% endif %}
 
                     {% if entity.reporter is not null %}
                         {%- set userData -%}
@@ -138,7 +141,7 @@
 
                         {% for collaborator in entity.collaborators %}
                             {%- set collaboratorData -%}
-                                {{ U.render_user_name(entity.assignee) }}
+                                {{ U.render_user_name(collaborator) }}
                             {%- endset %}
                             {% set collaboratorsData = collaboratorsData|merge([collaboratorData]) %}
                         {% endfor %}

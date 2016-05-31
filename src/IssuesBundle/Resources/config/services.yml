@@ -1,7 +1,4 @@
 services:
-    issues.model.collaboration:
-        class: IssuesBundle\Model\Service\Collaboration
-
     issues.workflow.action.remember_collaborant:
         class: IssuesBundle\Workflow\Action\RememberCollaboratorAction
         arguments:
@@ -87,3 +84,4 @@ services:
           - "@request"
           - "@doctrine.orm.entity_manager"
           - "@security.token_storage"
+          - "@issues.model.collaboration"

@@ -1,4 +1,7 @@
 services:
+    issues.model.collaboration:
+        class: IssuesBundle\Model\Service\Collaboration
+
     issues.model.issue_types_definition:
         class: IssuesBundle\Model\Service\IssueTypesDefinition
         arguments:

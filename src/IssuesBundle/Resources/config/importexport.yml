@@ -1,6 +1,3 @@
-parameters:
-    issues_bundle.import_export.entity: "IssuesBundle\Entity\Issue"
-
 services:
     issues_bundle.importexport.template_fixture.issue:
         class: IssuesBundle\ImportExport\TemplateFixture\IssueFixture
@@ -27,14 +24,14 @@ services:
         calls:
              - [setDataConverter, ['@issues_bundle.importexport.data_converter.issue']]
         tags:
-            - { name: oro_importexport.processor, type: export, entity: %issues_bundle.import_export.entity%, alias: issues }
+            - { name: oro_importexport.processor, type: export, entity: "IssuesBundle\Entity\Issue", alias: issues }
 
     issues_bundle.importexport.export_processor.template.issue:
         parent: oro_importexport.processor.export_abstract
         calls:
             - [setDataConverter, ['@issues_bundle.importexport.template_fixture.data_converter.issue']]
         tags:
-            - { name: oro_importexport.processor, type: export_template, entity: %issues_bundle.import_export.entity%, alias: issues }
+            - { name: oro_importexport.processor, type: export_template, entity: "IssuesBundle\Entity\Issue", alias: issues }
 
     # Import Strategy
     issues_bundle.importexport.strategy.issues.add_or_replace:
@@ -48,5 +45,5 @@ services:
              - [setDataConverter, [@issues_bundle.importexport.data_converter.issue]]
              - [setStrategy, [@issues_bundle.importexport.strategy.issues.add_or_replace]]
         tags:
-            - { name: oro_importexport.processor, type: import, entity: %issues_bundle.import_export.entity%, alias: issues.add_or_replace_issue }
-            - { name: oro_importexport.processor, type: import_validation, entity: %issues_bundle.import_export.entity%, alias: issues.add_or_replace_issue }
+            - { name: oro_importexport.processor, type: import, entity: "IssuesBundle\Entity\Issue", alias: issues.add_or_replace_issue }
+            - { name: oro_importexport.processor, type: import_validation, entity: "IssuesBundle\Entity\Issue", alias: issues.add_or_replace_issue }

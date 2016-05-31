@@ -11,13 +11,13 @@ but I did mistake in indentation. The Oro WorkflowBundle did not tell me that th
 * Emphasis Interfaces over inheritance and code structure
 Some bundles require user to inherit on the specified classes or place class under specified folder. This should
 be less tight and should not force user to design his code in imposed way. Instead, usage of interfaces should be
-the way to connect into the API's of bundles, and instead of folder structure the classes implementing those interfaces
+the way to connect into the API's of bundles, and instead of folder structure the classes, implementing those interfaces
 should be easy to register/unregister in the configuration files.
 
 * Merge documentation
-Some crucial parts of the documentation are either on the Oro website or at github. Merging these two together may
+Some crucial parts of the documentation are either on the Oro website or on github. Merging these two together may
 give developer more confidence and shorten up time for getting familiar with Oro Bundles.
-Also more end to end examples should be included. Ie. in the workflows, I was not able to find how to read
+Also __more end to end examples, FOR EVERY FEATURE MENTIONED, should be presented__. Ie. in the workflows, I was not able to find how to read
 the attribute data I have set in one of steps, it was not included in the docs and the only way to find
 out was to debug the code. It should be mandatory to provide documentation for reading state, when there is a document
 on how to modify it.

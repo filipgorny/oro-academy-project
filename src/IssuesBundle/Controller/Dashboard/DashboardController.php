@@ -20,7 +20,8 @@ class DashboardController extends Controller
      * @Route(
      *      "/dashboard/widgets/issues/{widget}",
      *      name="issues.issues_by_status_chart",
-     *      requirements={"widget"="[\w-]+"}
+     *      requirements={"widget"="[\w-]+"},
+     *      options={"expose"=true}
      * )
      * @Template("IssuesBundle:Dashboard:issuesByStatusChart.html.twig")
      * @param $widget

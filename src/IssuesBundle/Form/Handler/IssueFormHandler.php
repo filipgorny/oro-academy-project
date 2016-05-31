@@ -4,6 +4,7 @@ namespace IssuesBundle\Form\Handler;
 
 use Doctrine\ORM\EntityManagerInterface;
 use IssuesBundle\Entity\Issue;
+use IssuesBundle\Model\Service\Collaboration;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -35,17 +36,24 @@ class IssueFormHandler
     private $tokenStorage;
 
     /**
+     * @var Collaboration
+     */
+    private $collaboration;
+
+    /**
      * IssueFormHandler constructor.
      * @param FormInterface $form
      * @param Request $request
      * @param EntityManagerInterface $entityManager
      * @param TokenStorageInterface $tokenStorage
+     * @param Collaboration $collaboration
      */
     public function __construct(
         FormInterface $form,
         Request $request,
         EntityManagerInterface $entityManager,
-        TokenStorageInterface $tokenStorage
+        TokenStorageInterface $tokenStorage,
+        Collaboration $collaboration
     ) {
         $this->form = $form;
         $this->request = $request;
@@ -107,6 +115,8 @@ class IssueFormHandler
      */
     private function onSuccess(Issue $entity)
     {
+        $this->collaboration->updateCollaborators($entity);
+
         $this->entityManager->persist($entity);
         $this->entityManager->flush();
     }

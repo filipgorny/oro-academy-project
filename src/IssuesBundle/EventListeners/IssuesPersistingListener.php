@@ -2,7 +2,10 @@
 
 namespace IssuesBundle\EventListeners;
 
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\OnFlushEventArgs;
+use Doctrine\ORM\Event\PreUpdateEventArgs;
 use IssuesBundle\Entity\Issue;
 use IssuesBundle\Model\Service\Collaboration;
 use IssuesBundle\Model\Service\IssueCodeGenerator;
@@ -59,30 +62,33 @@ class IssuesPersistingListener
      */
     public function prePersist(LifecycleEventArgs $args)
     {
-        $entity = $args->getEntity();
-
-        if ($entity instanceof Issue) {
-            $this->issueUpdateStamp->populateCreationAndUpdateStamps($entity);
-
-            $token = $this->tokenStorage->getToken();
-
-            if ($token && $token->getUser()) {
-                $this->collaboration->markUserAsCollaborator($token->getUser(), $entity);
-            }
-
-            $code = $entity->getCode();
-
-            if (empty($code)) {
-                $this->issueCodeGenerator->populateCode($args->getEntityManager(), $entity);
-            }
+        if ($args->getEntity() instanceof Issue) {
+            $this->handleIssue($args->getEntity());
         }
     }
 
     /**
-     * @param LifecycleEventArgs $args
+     * @param PreUpdateEventArgs $args
      */
-    public function preUpdate(LifecycleEventArgs $args)
+    public function preUpdate(PreUpdateEventArgs $args)
     {
-        return $this->prePersist($args);
+        if ($args->getEntity() instanceof Issue) {
+            $entity = $args->getEntity();
+
+            $this->handleIssue($entity);
+
+            $em = $args->getEntityManager();
+            $uow = $em->getUnitOfWork();
+            $meta = $em->getClassMetadata(get_class($entity));
+            $uow->recomputeSingleEntityChangeSet($meta, $entity);
+        }
+    }
+
+    /**
+     * @param $entity
+     */
+    private function handleIssue($entity)
+    {
+        $this->issueUpdateStamp->populateCreationAndUpdateStamps($entity);
     }
 }

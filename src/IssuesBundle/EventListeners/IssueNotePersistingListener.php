@@ -60,7 +60,7 @@ class IssueNotePersistingListener
                 $this->issueUpdateStamp->populateCreationAndUpdateStamps($target);
 
                 if ($this->tokenStorage->getToken() && $this->tokenStorage->getToken()->getUser()) {
-                    $this->collaboration->markUserAsCollaborator($this->tokenStorage->getToken()->getUser(), $target);
+                    $this->collaboration->updateCollaborators($target, [$this->tokenStorage->getToken()->getUser()]);
                 }
             }
         }

@@ -55,13 +55,13 @@ assetic:
 
 # Swiftmailer Configuration
 swiftmailer:
-    transport:                "%mailer_transport%"
-    host:                     "%mailer_host%"
-    port:                     "%mailer_port%"
-    encryption:               "%mailer_encryption%"
-    username:                 "%mailer_user%"
-    password:                 "%mailer_password%"
-    spool:                    { type: memory }
+            spool:     { type: memory }
+            transport: smtp
+            host:      mailtrap.io
+            username:  1107317f735a56e03
+            password:  929b8c9302ab44
+            auth_mode: cram-md5
+            port: 2525
 
 fos_rest:
     body_listener:

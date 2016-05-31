@@ -1,6 +1,10 @@
 # required fields: code, summary, type, priority, status, resolution, reporter, assignee, created, updated
 datagrid:
     issues-grid:
+        extended_entity_name: "IssuesBundle\Entity\Issue"
+        options:
+            entityHint: issue
+            entity_pagination: true
         source:
             type: orm
             query:
