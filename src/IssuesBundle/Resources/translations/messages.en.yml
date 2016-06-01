@@ -51,6 +51,10 @@ issues:
             label: Updated by
         created_at:
             label: Created at
+        workflow_step:
+            label: Status
+        workflowStep:
+            label: Status
         flashMessages:
             create:
                 success: Issue created succesfuly
@@ -80,3 +84,8 @@ issues:
         task: task
         subtask: subtask
         story: story
+
+oro:
+    workflow:
+        workflowstep:
+            related_entity.label: Status
