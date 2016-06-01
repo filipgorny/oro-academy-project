@@ -45,7 +45,7 @@ class IssuesControllersTest extends WebTestCase
 
         $this->assertHtmlResponseStatusCodeEquals($result, 200);
 
-        $this->assertContains($issue->getLabel(), $result->getContent());
+        $this->assertContains($issue->getCode(), $result->getContent());
         $this->assertContains($issueTypeDefinition->translateType($issue->getType()), $result->getContent());
         $this->assertContains(
             $issue->getPriority()->getName(),

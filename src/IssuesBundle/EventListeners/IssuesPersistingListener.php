@@ -63,7 +63,7 @@ class IssuesPersistingListener
     public function prePersist(LifecycleEventArgs $args)
     {
         if ($args->getEntity() instanceof Issue) {
-            $this->handleIssue($args->getEntity());
+            $this->handleIssue($args->getEntityManager(), $args->getEntity());
         }
     }
 
@@ -75,7 +75,7 @@ class IssuesPersistingListener
         if ($args->getEntity() instanceof Issue) {
             $entity = $args->getEntity();
 
-            $this->handleIssue($entity);
+            $this->handleIssue($args->getEntityManager(), $entity);
 
             $em = $args->getEntityManager();
             $uow = $em->getUnitOfWork();
@@ -85,10 +85,15 @@ class IssuesPersistingListener
     }
 
     /**
-     * @param $entity
+     * @param EntityManager $entityManager
+     * @param Issue $issue
      */
-    private function handleIssue($entity)
+    private function handleIssue(EntityManager $entityManager, Issue $issue)
     {
-        $this->issueUpdateStamp->populateCreationAndUpdateStamps($entity);
+        $this->issueUpdateStamp->populateCreationAndUpdateStamps($issue);
+
+        if (!$issue->getCode()) {
+            $this->issueCodeGenerator->populateCode($entityManager, $issue);
+        }
     }
 }

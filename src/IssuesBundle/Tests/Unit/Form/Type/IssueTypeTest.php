@@ -280,7 +280,9 @@ class IssueTypeTest extends TypeTestCase
 
     public function testSubmitValidData()
     {
-        $issueTypeDefinition = new IssueTypesDefinition();
+        $translator = $this->getMock('Symfony\Component\Translation\TranslatorInterface');
+
+        $issueTypeDefinition = new IssueTypesDefinition($translator);
 
         $issueType = new IssueType($issueTypeDefinition);
 

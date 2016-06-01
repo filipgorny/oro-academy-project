@@ -37,6 +37,32 @@
     {% endif %}
 {% endblock navButtons %}
 
+{#{% block pageHeader %}#}
+    {#{% if entity.parent is not null %}#}
+        {#{% set breadcrumbs = {#}
+            {#'entity':      entity,#}
+            {#'indexPath':   path('issues.issues_index'),#}
+            {#'indexLabel': 'issues.issue.entity_label_plural'|trans,#}
+            {#'entityTitle': entity.summary,#}
+            {#'additional': [{#}
+                {#'entity': entity.parent,#}
+                {#'indexPath': path('issues.issue_view', { id: entity.parent.id }),#}
+                {#'indexLabel': entity.parent.label,#}
+                {#'entityTitle': entity.parent.summary,#}
+            {#}]#}
+        {#} %}#}
+    {#{% else %}#}
+        {#{% set breadcrumbs = {#}
+            {#'entity':      entity,#}
+            {#'indexPath':   path('issues.issues_index'),#}
+            {#'indexLabel': 'issues.issue.entity_label_plural'|trans,#}
+            {#'entityTitle': entity.summary,#}
+        {#} %}#}
+    {#{% endif %}#}
+
+    {#{{ parent() }}#}
+{#{% endblock pageHeader %}#}
+
 {% block pageHeader %}
     {% if entity.parent is not null %}
         {% set breadcrumbs = {
@@ -45,10 +71,10 @@
             'indexLabel': 'issues.issue.entity_label_plural'|trans,
             'entityTitle': entity.summary,
             'additional': [{
-                'entity': entity.parent,
-                'indexPath': path('issues.issue_view', { id: entity.parent.id }),
-                'indexLabel': entity.parent.label,
-                'entityTitle': entity.parent.summary,
+            'entity': entity.parent,
+            'indexPath': path('issues.issue_view', { id: entity.parent.id }),
+            'indexLabel': entity.parent.label,
+            'entityTitle': entity.parent.summary,
             }]
         } %}
     {% else %}
@@ -58,10 +84,14 @@
             'indexLabel': 'issues.issue.entity_label_plural'|trans,
             'entityTitle': entity.summary,
         } %}
-    {% endif %}
+        {% endif %}
 
     {{ parent() }}
 {% endblock pageHeader %}
+
+{% block breadcrumbs %}
+    {{ parent() }}
+{% endblock breadcrumbs %}
 
 {% block content_data %}
     {% set data %}

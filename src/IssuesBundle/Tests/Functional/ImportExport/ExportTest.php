@@ -72,7 +72,7 @@ class ExportTest extends WebTestCase
                 }
             }
 
-            $this->assertEquals($found, count($issues));
+            $this->assertTrue($found >= count($issues));
 
             return;
         }

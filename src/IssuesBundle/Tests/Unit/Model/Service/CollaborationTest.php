@@ -24,11 +24,11 @@ class CollaborationTest extends \PHPUnit_Framework_TestCase
         $user2 = new User();
         $user2->setUsername('test collaborator 2');
 
-        $collaboration->markUserAsCollaborator($user1, $issue);
+        $collaboration->updateCollaborators($issue, [$user1]);
         // adding second time to test if it doesn't double
-        $collaboration->markUserAsCollaborator($user1, $issue);
+        $collaboration->updateCollaborators($issue, [$user1]);
 
-        $collaboration->markUserAsCollaborator($user2, $issue);
+        $collaboration->updateCollaborators($issue, [$user2]);
 
         $this->assertEquals(2, $issue->getCollaborators()->count());
     }

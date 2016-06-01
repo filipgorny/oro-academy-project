@@ -59,6 +59,7 @@ class IssueFormHandler
         $this->request = $request;
         $this->entityManager = $entityManager;
         $this->tokenStorage = $tokenStorage;
+        $this->collaboration = $collaboration;
     }
 
     /**
@@ -115,9 +116,25 @@ class IssueFormHandler
      */
     private function onSuccess(Issue $entity)
     {
+        $this->fillDefaultValues($entity);
+
         $this->collaboration->updateCollaborators($entity);
 
         $this->entityManager->persist($entity);
         $this->entityManager->flush();
+    }
+
+    /**
+     * @param Issue $entity
+     */
+    private function fillDefaultValues(Issue $entity)
+    {
+        if (!$entity->getReporter()) {
+            $entity->setReporter($this->tokenStorage->getToken()->getUser());
+        }
+
+        if (!$entity->getAssignee()) {
+            $entity->setAssignee($this->tokenStorage->getToken()->getUser());
+        }
     }
 }

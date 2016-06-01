@@ -14,7 +14,9 @@ class IssueFormatterTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $issueTypeDefinition = new IssueTypesDefinition();
+        $translator = $this->getMock('Symfony\Component\Translation\TranslatorInterface');
+
+        $issueTypeDefinition = new IssueTypesDefinition($translator);
 
         $this->formatter = new IssueFormatter($issueTypeDefinition);
     }

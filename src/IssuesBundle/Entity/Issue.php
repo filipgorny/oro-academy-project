@@ -24,7 +24,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          },
  *          "ownership"={
  *              "owner_type"="USER",
- *              "owner_field_name"="owner",
+ *              "owner_field_name"="reporter",
  *              "owner_column_name"="reporter_id",
  *              "organization_field_name"="organization",
  *              "organization_column_name"="organization_id"
@@ -53,7 +53,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  *      }
  * )
  */
-
 class Issue extends ExtendIssue
 {
     /**

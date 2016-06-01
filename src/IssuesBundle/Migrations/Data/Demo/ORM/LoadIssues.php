@@ -9,13 +9,20 @@ use IssuesBundle\Entity\Issue;
 use IssuesBundle\Entity\Priority;
 use IssuesBundle\Model\Service\IssueTypesDefinition;
 use Oro\Bundle\UserBundle\Tests\Selenium\Pages\User;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Class LoadIssues
  * @package IssuesBundle\Migrations\Data\Demo\ORM
  */
-class LoadIssues extends AbstractFixture
+class LoadIssues extends AbstractFixture implements ContainerAwareInterface
 {
+    /**
+     * @var ContainerInterface
+     */
+    private $container;
+
     public function load(ObjectManager $manager)
     {
         $issue = new Issue();
@@ -100,7 +107,7 @@ class LoadIssues extends AbstractFixture
             $issue->setCreatedAt(new \DateTime('now'));
             $issue->setUpdatedAt(new \DateTime('now'));
 
-            $issue->getCollaborators()->add($user);
+            $this->container->get('issues.model.collaboration')->updateCollaborators($issue);
 
             $manager->persist($issue);
 
@@ -130,5 +137,13 @@ class LoadIssues extends AbstractFixture
         $priority = $manager->getRepository('IssuesBundle:Priority')->findOneBy([]);
 
         return $priority;
+    }
+
+    /**
+     * @param ContainerInterface|null $container
+     */
+    public function setContainer(ContainerInterface $container = null)
+    {
+        $this->container = $container;
     }
 }

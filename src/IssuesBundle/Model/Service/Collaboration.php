@@ -2,6 +2,7 @@
 
 namespace IssuesBundle\Model\Service;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use IssuesBundle\Entity\Issue;
 
 /**
@@ -16,22 +17,24 @@ class Collaboration
     {
         $collaborators = $issue->getCollaborators();
 
+        if ($collaborators === null) {
+            $collaborators = new ArrayCollection();
+        }
+
         foreach ($newUsers as $user) {
             if (!$collaborators->contains($user)) {
                 $collaborators->add($user);
             }
         }
 
-        if (!$collaborators->contains($issue->getAssignee())) {
+        if (!$collaborators->contains($issue->getAssignee()) && $issue->getAssignee()) {
             $collaborators->add($issue->getAssignee());
         }
 
-        if (!$collaborators->contains($issue->getReporter())) {
+        if (!$collaborators->contains($issue->getReporter()) && $issue->getReporter()) {
             $collaborators->add($issue->getReporter());
         }
         
         $issue->setCollaborators($collaborators);
-
-        $issue->setCode($issue->getCode().' - edited');
     }
 }

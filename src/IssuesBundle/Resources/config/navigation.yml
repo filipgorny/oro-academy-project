@@ -8,15 +8,11 @@ oro_menu_config:
         issues_list:
             label: List issues
             route: issues.issues_index
+            extras:
+                routes: ['issues.issue_*']
         issues_add:
             label: Add new
             route: issues.issue_create
-        issues_view:
-            label: View issue
-            route: issues.issue_view
-            routeParameters:
-                id: 0
-            display: false
         issues_collaborated_recently:
             label: Collaborated recently
             route: issues.issues_collaborated_recently
@@ -38,7 +34,6 @@ oro_menu_config:
                     children:
                         issues_list: ~
                         issues_add: ~
-                        issues_view: ~
                         issues_collaborated_recently: ~
 
 oro_titles:
