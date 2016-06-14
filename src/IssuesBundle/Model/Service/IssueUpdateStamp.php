@@ -6,10 +6,6 @@ use IssuesBundle\Entity\Issue;
 use Oro\Bundle\UserBundle\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
-/**
- * Class IssueUpdateStamp
- * @package IssuesBundle\Model\Service
- */
 class IssueUpdateStamp
 {
     /**

@@ -12,10 +12,6 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotNull;
 
-/**
- * Class IssueType
- * @package IssuesBundle\Form\Type
- */
 class IssueType extends AbstractType
 {
     /**

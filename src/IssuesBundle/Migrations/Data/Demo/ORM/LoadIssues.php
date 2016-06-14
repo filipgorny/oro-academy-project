@@ -12,10 +12,6 @@ use Oro\Bundle\UserBundle\Tests\Selenium\Pages\User;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-/**
- * Class LoadIssues
- * @package IssuesBundle\Migrations\Data\Demo\ORM
- */
 class LoadIssues extends AbstractFixture implements ContainerAwareInterface
 {
     /**

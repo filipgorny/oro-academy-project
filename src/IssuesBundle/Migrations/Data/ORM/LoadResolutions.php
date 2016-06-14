@@ -6,10 +6,6 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use IssuesBundle\Entity\Resolution;
 
-/**
- * Class LoadResolutions
- * @package IssuesBundle\Migrations\Data\ORM
- */
 class LoadResolutions extends AbstractFixture
 {
     /**

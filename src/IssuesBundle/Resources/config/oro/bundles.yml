@@ -1,0 +1,2 @@
+bundles:
+    - { name: IssuesBundle\IssuesBundle, priority: 100 }

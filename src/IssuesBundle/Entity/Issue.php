@@ -288,6 +288,8 @@ class Issue extends ExtendIssue
      */
     public function __construct()
     {
+        parent::__construct();
+
         $this->children = new ArrayCollection();
         $this->relatedIssues = new ArrayCollection();
         $this->collaborators = new ArrayCollection();

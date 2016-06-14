@@ -6,10 +6,6 @@ use Doctrine\ORM\EntityManager;
 use IssuesBundle\Model\Service\Provider\StatusesProvider;
 use Oro\Bundle\WorkflowBundle\Entity\WorkflowStep;
 
-/**
- * Class StatusesProviderTest
- * @package IssuesBundle\Test\Model\Service\Provider
- */
 class StatusesProviderTest extends \PHPUnit_Framework_TestCase
 {
     /**

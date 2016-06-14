@@ -19,7 +19,11 @@ trait EntityTestTrait
                 $value = 'test';
 
                 if ($params[0]->getClass()) {
-                    $value = $this->getMock($params[0]->getClass()->getName());
+                    if ($params[0]->getClass()->getName() == 'DateTime') {
+                        $value = new \DateTime('now');
+                    } else {
+                        $value = $this->getMock($params[0]->getClass()->getName());
+                    }
                 }
 
                 $entity->{'set'.$propertyName}($value);

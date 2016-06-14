@@ -4,10 +4,6 @@ namespace IssuesBundle\ImportExport\Serializer\Normalizer;
 
 use Oro\Bundle\ImportExportBundle\Serializer\Normalizer\ConfigurableEntityNormalizer;
 
-/**
- * Class IssueNormalizer
- * @package IssuesBundle\ImportExport\Serializer\Normalizer
- */
 class IssueNormalizer extends ConfigurableEntityNormalizer
 {
     const ENTITY_CLASS = 'IssuesBundle\Entity\Issue';

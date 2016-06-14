@@ -7,8 +7,6 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 /**
  * Form type used in API controllers
  *
- * Class IssueApiType
- * @package IssuesBundle\Form\Type
  */
 class IssueApiType extends IssueType
 {

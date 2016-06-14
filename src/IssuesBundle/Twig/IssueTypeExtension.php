@@ -4,10 +4,6 @@ namespace IssuesBundle\Twig;
 
 use IssuesBundle\Model\Service\IssueTypesDefinition;
 
-/**
- * Class IssueTypeExtension
- * @package IssuesBundle\Twig
- */
 class IssueTypeExtension extends \Twig_Extension
 {
     /**

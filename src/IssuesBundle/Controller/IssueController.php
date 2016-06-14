@@ -42,21 +42,15 @@ class IssueController extends Controller
     }
 
     /**
-     * @param int $id
+     * @param Issue $issue
      * @return array
      *
      * @Route("/view/{id}", name="issues.issue_view", requirements={"id"="\d+"})
      * @Template
      */
-    public function viewAction($id)
+    public function viewAction(Issue $issue)
     {
-        $issue = $this->getDoctrine()->getRepository('IssuesBundle:Issue')
-            ->findOneBy([
-                'id' => $id,
-                'deleted' => false
-            ]);
-
-        if ($issue === null) {
+        if ($issue->isDeleted()) {
             throw new NotFoundHttpException();
         }
 

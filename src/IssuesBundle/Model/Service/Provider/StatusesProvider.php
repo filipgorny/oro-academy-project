@@ -4,10 +4,6 @@ namespace IssuesBundle\Model\Service\Provider;
 
 use Doctrine\ORM\EntityManager;
 
-/**
- * Class StatusesProvider
- * @package IssuesBundle\Model\Service\Provider
- */
 class StatusesProvider
 {
     /**

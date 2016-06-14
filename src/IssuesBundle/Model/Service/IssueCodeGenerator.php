@@ -5,10 +5,6 @@ namespace IssuesBundle\Model\Service;
 use Doctrine\ORM\EntityManager;
 use IssuesBundle\Entity\Issue;
 
-/**
- * Class IssueCodeGenerator
- * @package IssuesBundle\Model\Service
- */
 class IssueCodeGenerator
 {
     /**

@@ -8,10 +8,7 @@ class AppKernel extends OroKernel
 {
     public function registerBundles()
     {
-        $bundles = array(
-        // bundles,
-            new IssuesBundle\IssuesBundle(),
-        );
+        $bundles = array();
 
         if ('dev' === $this->getEnvironment()) {
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();

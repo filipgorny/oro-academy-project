@@ -9,10 +9,6 @@ use IssuesBundle\Model\Service\IssueUpdateStamp;
 use Oro\Bundle\NoteBundle\Entity\Note;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
-/**
- * Class IssueNotePersistingListener
- * @package IssuesBundle\EventListeners
- */
 class IssueNotePersistingListener
 {
     /**

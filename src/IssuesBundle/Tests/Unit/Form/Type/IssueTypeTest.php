@@ -12,17 +12,12 @@ use Oro\Bundle\FormBundle\Form\Type\OroJquerySelect2HiddenType;
 use Oro\Bundle\FormBundle\Form\Type\OroRichTextType;
 use Oro\Bundle\UserBundle\Form\Type\OrganizationUserAclSelectType;
 use Oro\Bundle\UserBundle\Form\Type\UserAclSelectType;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
 use Symfony\Component\Form\PreloadedExtension;
 use Symfony\Component\Form\Test\TypeTestCase;
 use Symfony\Component\Validator\ConstraintViolationList;
 
-/**
- * Class IssueTypeTest
- * @package IssuesBundle\Tests\Unit\Form\Type
- *
- * @SuppressWarnings(PHPMD)
- */
 class IssueTypeTest extends TypeTestCase
 {
     private $validator;
@@ -58,6 +53,8 @@ class IssueTypeTest extends TypeTestCase
     }
 
     /**
+     * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+     *
      * @return AbstractType[]
      */
     protected function loadTypes()

@@ -8,10 +8,6 @@ use IssuesBundle\Entity\Resolution;
 use Oro\Bundle\WorkflowBundle\Model\Action\ActionInterface;
 use Oro\Component\ConfigExpression\ExpressionInterface;
 
-/**
- * Class SetResolutionAction
- * @package IssuesBundle\Workflow\Action
- */
 class SetResolutionAction implements ActionInterface
 {
     /**

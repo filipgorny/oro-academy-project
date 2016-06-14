@@ -9,10 +9,6 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
-/**
- * Class IssueFormHandler
- * @package IssuesBundle\Form\Handler
- */
 class IssueFormHandler
 {
     /**

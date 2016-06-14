@@ -4,7 +4,6 @@ namespace IssuesBundle\EventListeners;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Event\LifecycleEventArgs;
-use Doctrine\ORM\Event\OnFlushEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use IssuesBundle\Entity\Issue;
 use IssuesBundle\Model\Service\Collaboration;
@@ -12,10 +11,6 @@ use IssuesBundle\Model\Service\IssueCodeGenerator;
 use IssuesBundle\Model\Service\IssueUpdateStamp;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
-/**
- * Class IssuesPersistingListener
- * @package IssuesBundle\EventListeners
- */
 class IssuesPersistingListener
 {
     /**

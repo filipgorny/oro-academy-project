@@ -6,10 +6,6 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use IssuesBundle\Entity\Priority;
 
-/**
- * Class LoadPriorities
- * @package IssuesBundle\Migrations\Data\ORM
- */
 class LoadPriorities extends AbstractFixture
 {
     /**

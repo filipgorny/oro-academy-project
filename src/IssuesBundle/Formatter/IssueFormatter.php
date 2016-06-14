@@ -5,10 +5,6 @@ namespace IssuesBundle\Formatter;
 use IssuesBundle\Model\Service\IssueTypesDefinition;
 use Oro\Bundle\DataGridBundle\Datasource\ResultRecordInterface;
 
-/**
- * Class IssueFormatter
- * @package IssuesBundle\Formatter
- */
 class IssueFormatter
 {
     /**

@@ -4,7 +4,6 @@ namespace IssuesBundle\Test\Workflow;
 
 use IssuesBundle\Entity\Issue;
 use IssuesBundle\Tests\Functional\DataFixtures\LoadUserData;
-use IssuesBundle\Tests\Functional\DataFixtures\LoadWorkflowDefinitions;
 use Oro\Bundle\TestFrameworkBundle\Test\WebTestCase;
 use Oro\Bundle\UserBundle\Entity\User;
 use Oro\Bundle\WorkflowBundle\Model\WorkflowManager;
@@ -32,11 +31,7 @@ class RememberCollaboratorTest extends WebTestCase
 
         $issue = $this->getIssue();
 
-        $workflowManager = $this->getWorkflowManager();
-
-       // $workflowManager->activateWorkflow(LoadWorkflowDefinitions::WORKFLOW_NAME);
-
-        $workflow = $workflowManager->getWorkflow(LoadWorkflowDefinitions::WORKFLOW_NAME);
+        $workflow = $this->getWorkflowManager()->getWorkflow('issue_resolving');
         $workflowItem = $issue->getWorkflowItem();
 
         $this->getContainer()->get('doctrine.orm.entity_manager')->persist($workflowItem);

@@ -7,9 +7,6 @@ use IssuesBundle\Entity\Issue;
 
 /**
  * Manager domain service, for adding users to collaboration list in the Issue model.
- *
- * Class Collaboration
- * @package IssuesBundle\Model
  */
 class Collaboration
 {

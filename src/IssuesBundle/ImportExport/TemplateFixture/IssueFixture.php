@@ -7,10 +7,6 @@ use IssuesBundle\Model\Service\IssueTypesDefinition;
 use Oro\Bundle\ImportExportBundle\TemplateFixture\AbstractTemplateRepository;
 use Oro\Bundle\ImportExportBundle\TemplateFixture\TemplateFixtureInterface;
 
-/**
- * Class IssueFixture
- * @package IssuesBundle\ImportExport\TemplateFixture
- */
 class IssueFixture extends AbstractTemplateRepository implements TemplateFixtureInterface
 {
     /**

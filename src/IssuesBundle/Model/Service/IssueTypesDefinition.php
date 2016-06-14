@@ -4,10 +4,6 @@ namespace IssuesBundle\Model\Service;
 
 use Symfony\Component\Translation\TranslatorInterface;
 
-/**
- * Class IssueTypesDefinition
- * @package IssuesBundle\Model\Service
- */
 class IssueTypesDefinition
 {
     const TYPE_BUG = 1;

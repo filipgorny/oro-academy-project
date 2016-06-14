@@ -5,10 +5,6 @@ namespace IssuesBundle\Model;
 use Oro\Bundle\ActivityBundle\Model\ActivityInterface;
 use Oro\Bundle\ActivityBundle\Model\ExtendActivity;
 
-/**
- * Class ExtendIssue
- * @package IssuesBundle\Model
- */
 class ExtendIssue implements ActivityInterface
 {
     use ExtendActivity;

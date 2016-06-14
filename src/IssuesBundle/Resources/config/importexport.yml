@@ -35,7 +35,6 @@ services:
 
     # Import Strategy
     issues_bundle.importexport.strategy.issues.add_or_replace:
-        class: IssuesBundle\ImportExport\Strategy\IssueAddOrReplaceStrategy
         parent: oro_importexport.strategy.configurable_add_or_replace
 
     # Import processor

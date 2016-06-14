@@ -5,10 +5,6 @@ namespace IssuesBundle\Entity\Repository;
 use Doctrine\ORM\EntityRepository;
 use IssuesBundle\Entity\Issue;
 
-/**
- * Class PriorityRepository
- * @package IssuesBundle\Entity\Repository
- */
 class PriorityRepository extends EntityRepository
 {
     /**

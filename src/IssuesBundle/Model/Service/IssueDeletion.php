@@ -5,10 +5,6 @@ namespace IssuesBundle\Model\Service;
 use Doctrine\ORM\EntityManager;
 use IssuesBundle\Entity\Issue;
 
-/**
- * Class IssueDeletion
- * @package IssuesBundle\Model\Service
- */
 class IssueDeletion
 {
     /**

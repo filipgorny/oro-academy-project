@@ -7,10 +7,6 @@ use Oro\Bundle\WorkflowBundle\Model\Action\ActionInterface;
 use Oro\Component\ConfigExpression\ExpressionInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
-/**
- * Class RememberCollaboratorAction
- * @package IssuesBundle\Workflow\Action
- */
 class RememberCollaboratorAction implements ActionInterface
 {
     /**
