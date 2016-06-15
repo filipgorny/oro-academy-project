@@ -24,3 +24,13 @@ services:
         class: IssuesBundle\Model\Service\Provider\StatusesProvider
         arguments:
             - "@doctrine.orm.entity_manager"
+
+    issues.model.action.save_note_author_as_collaborator:
+        class: IssuesBundle\Model\Action\SaveNoteAuthorAsCollaborator
+        arguments:
+            - "@oro_workflow.context_accessor"
+            - "@issues.model.issue_update_stamp"
+            - "@issues.model.collaboration"
+            - "@security.token_storage"
+        tags:
+            - { name: oro_workflow.action, alias: save_note_author_as_collaborator }

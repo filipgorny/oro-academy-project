@@ -1,0 +1,13 @@
+definitions:
+    save_note_author_as_collaborator:
+        label: 'Update issues collaborators after new note was added'
+        enabled: true
+        order: 1
+        entity: Oro\Bundle\NoteBundle\Entity\Note
+        actions_configuration:
+            - '@save_note_author_as_collaborator': ~
+
+triggers:
+    save_note_author_as_collaborator:
+        -
+            event: create

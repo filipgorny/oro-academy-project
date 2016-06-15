@@ -46,16 +46,6 @@ services:
             - { name: doctrine.event_listener, event: prePersist }
             - { name: doctrine.event_listener, event: preUpdate }
 
-    issues.listener.issue_note_persisting:
-        class: IssuesBundle\EventListeners\IssueNotePersistingListener
-        arguments:
-            - "@issues.model.issue_update_stamp"
-            - "@issues.model.collaboration"
-            - "@security.token_storage"
-        tags:
-            - { name: doctrine.event_listener, event: prePersist }
-            - { name: doctrine.event_listener, event: preUpdate }
-
     issues.formatter.issue_formatter:
         class: IssuesBundle\Formatter\IssueFormatter
         arguments:
@@ -85,3 +75,4 @@ services:
           - "@doctrine.orm.entity_manager"
           - "@security.token_storage"
           - "@issues.model.collaboration"
+
